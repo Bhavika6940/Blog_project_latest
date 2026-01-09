@@ -1,0 +1,40 @@
+{
+  "username": "admin",
+  "email": "admin@gmail.com",
+  "password": "admin@123",
+  "role_Id": 1
+}
+{
+  "username": "bhavika",
+  "email": "bhavika@gmail.com",
+  "password": "bhavika@123",
+  "roleId": 2
+}
+{
+  "username": "riya",
+  "email": "riya@gmail.com",
+  "password": "riya@123",
+  "roleId": 3
+}
+
+
+[
+  {
+    "permissionId": 1,
+    "canRead": true,
+    "canWrite": true,
+    "canDelete": false
+  },
+  {
+    "permissionId": 2,
+    "canRead": true,
+    "canWrite": false,
+    "canDelete": false
+  },
+  {
+    "permissionId": 3,
+    "canRead": true,
+    "canWrite": true,
+    "canDelete": true
+  }
+]

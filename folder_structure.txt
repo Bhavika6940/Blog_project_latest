@@ -1,0 +1,32 @@
+src/
+│
+├── api/
+│   ├── axios.js
+│   ├── auth.api.js
+│   ├── role.api.js
+│   ├── permission.api.js
+│   └── user.api.js
+│
+├── auth/
+│   ├── Login.jsx
+│   ├── ProtectedRoute.jsx
+│
+├── layouts/
+│   ├── AdminLayout.jsx
+│
+├── pages/
+│   └── super-admin/
+│       ├── Dashboard.jsx
+│       ├── Roles.jsx
+│       ├── Permissions.jsx
+│       ├── RolePermissions.jsx
+│       ├── UserPermissions.jsx
+│       └── Users.jsx
+│
+├── context/
+│   └── AuthContext.jsx
+│
+├── utils/
+│   └── hasPermission.js
+│
+└── App.jsx
