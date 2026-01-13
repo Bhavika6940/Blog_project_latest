@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../utils/authUtils";
+import axiosInstance from "../../../utils/authUtils";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./navbar";
+import Navbar from "../../Sidebar/Sidebar";
+import Swal from "sweetalert2";
 
 
 const CreatePost = () => {
@@ -82,6 +83,13 @@ const CreatePost = () => {
 					metaTitle: "",
 					metaDescription: ""
         		});
+				Swal.fire({
+						title: "Success!",
+						text: "Post created successfully!",       // your dynamic message
+						icon: "success",     // "success", "error", "warning", "info", "question"
+						confirmButtonText: "OK",
+						confirmButtonColor: "#4CAF50" // optional
+						});
             } 
             catch (err) {
                 const message =
@@ -90,7 +98,7 @@ const CreatePost = () => {
 						"Something went wrong";
 
 					console.error("Create post error:", err.response?.data || err);
-					alert(message);
+					
 
 					if (err.response?.status === 401) {
 						navigate("/");

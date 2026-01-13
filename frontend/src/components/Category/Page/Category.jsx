@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/navbar";
-import axios from "axios";
-import CreateCategoryModal from "../components/createCategoryModal";
-import axiosInstance from "../utils/authUtils";
+import Navbar from "../../Sidebar/Sidebar";
+import CreateCategoryModal from "../Form/CreateCategoryModal";
+import axiosInstance from "../../../utils/authUtils";
+import Swal from "sweetalert2";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -58,10 +58,24 @@ const Category = () => {
       const updatedCategory = res.data.data;
       setCategories(prev => prev.map(c => (c.id === id ? updatedCategory : c)));
       setEdit(null);
-      alert("Category updated successfully!");
+      Swal.fire({
+                  title: "Success!",
+                  text: "Category updated successfully!",       
+                  icon: "success",    
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4CAF50" 
+                  });
+      
     } catch (err) {
       console.error("Error editing category:", err);
-      alert("Failed to update category!");
+      Swal.fire({
+              title: "Error!",
+              text: "Failed to update category!",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#e74c3c", // red for error
+            })
+            
       throw err;
     }
   };

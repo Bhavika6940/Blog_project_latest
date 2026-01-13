@@ -2,7 +2,6 @@ import { useEffect , useState } from "react";
 
 
 const CreateCategoryModal = ({ onCreate , editCategory , onUpdate}) => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     const [formData , setFormData] = useState({
         name : "",

@@ -1,9 +1,9 @@
-import Navbar from "../components/navbar";
+
+
 
 const Dashboard = () => {
   return (
     <div style={{ backgroundColor: "#1e293b", minHeight: "100vh", fontFamily: "Poppins, sans-serif" }}>
-      <Navbar />
 
       <div className="container-fluid px-5 py-5">
 

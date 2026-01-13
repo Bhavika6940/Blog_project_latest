@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PermissionCard from "../components/permissionCard";
-import Navbar from "../components/navbar";
-import axiosInstance from "../utils/authUtils";
+import PermissionCard from "./PermissionCard";
+import Navbar from "../../Sidebar/Sidebar";
+import axiosInstance from "../../../utils/authUtils";
+import Swal from "sweetalert2";
 
 const Permissions = () => {
   const { roleId } = useParams();
@@ -62,10 +63,25 @@ const Permissions = () => {
       }));
 
       await axiosInstance.put(`/api/rolePermission/${roleId}`, payload);
-      alert("Permissions updated successfully!");
+       Swal.fire({
+                  title: "Success!",
+                  text: "Permissions updated successfully!",       
+                  icon: "success",     
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4CAF50" 
+                  });
+      
+      
     } catch (err) {
       console.error("Error saving permissions:", err);
-      alert("Failed to save permissions");
+      Swal.fire({
+              title: "Error!",
+              text: "Failed to save permissions!",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#e74c3c", // red for error
+            })
+      
     }
   };
 

@@ -51,4 +51,9 @@ export const logoutUser = () => {
   removeUser();
 };
 
+export const getImageUrl  = (filename) => {
+  if(!filename) return "/default-image.png"; // fallback
+  return `${import.meta.env.VITE_API_BASE_URL}/public/${filename}`;
+}
+
 export default axiosInstance;

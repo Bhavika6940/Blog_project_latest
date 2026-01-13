@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import RoleCard from "../components/roleCard";
-import CreateRoleModal from "../components/createRoleModal";
-import Navbar from "../components/navbar";
-import axios from "axios";
-import axiosInstance from "../utils/authUtils";
+import RoleCard from "./RoleCard";
+import CreateRoleModal from "../Form/CreateRoleModal";
+import axiosInstance from "../../../utils/authUtils";
+import Swal from "sweetalert2";
 
 const Roles = () => {
   const [roles, setRoles] = useState([]);
@@ -28,7 +27,14 @@ const Roles = () => {
       const response = await axiosInstance.post("/api/role", payload);
       const newRole = response.data.data;
       setRoles((prev) => [...prev, newRole]);
-      alert("Role created successfully!");
+      Swal.fire({
+                  title: "Success!",
+                  text: "Role updated successfully!",      
+                  icon: "success",     
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4CAF50" 
+                  });
+      
       return response;
     } catch (err) {
       console.error("Error creating role:", err);
@@ -51,8 +57,6 @@ const Roles = () => {
 
   return (
     <div style={{ backgroundColor: "#1e293b", minHeight: "100vh", fontFamily: "Poppins, sans-serif" }}>
-      <Navbar />
-
       {/* Header Section */}
       <div className="d-flex justify-content-between align-items-center px-5 py-4">
         <h3

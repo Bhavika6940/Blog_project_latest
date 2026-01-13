@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/navbar";
-import CreateUserModal from "../components/createUserModal";
-import axiosInstance from "../utils/authUtils";
+import CreateUserModal from "../Form/CreateUserModal";
+import axiosInstance from "../../../utils/authUtils";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -39,7 +39,14 @@ const Users = () => {
       setEdit(null);
     } catch (err) {
       console.error("Create user error:", err);
-      alert("Failed to create user");
+      Swal.fire({
+              title: "Error!",
+              text: "Failed to create user",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#e74c3c", 
+            })
+      
     }
   };
 
@@ -83,10 +90,25 @@ const Users = () => {
 
     try {
       await axiosInstance.put(`/api/userPermission/${userId}`, payload);
-      alert("Permission saved successfully!");
+      Swal.fire({
+                  title: "Success!",
+                  text: "Permission saved successfully!",       
+                  icon: "success",     
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4CAF50" 
+                  });
+
+      
     } catch (err) {
       console.error("Error saving user permission:", err);
-      alert("Failed to save permission");
+      Swal.fire({
+              title: "Error!",
+              text: "Failed to save permission",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#e74c3c", 
+            })
+      
     }
   };
 
@@ -98,11 +120,28 @@ const updateUser = async (userId, payload) => {
     prev.map(u => (u.id === userId ? { ...u, ...payload } : u))
     );
     setEdit(null);
-    alert("User updated successfully!");
+    Swal.fire({
+                  title: "Success!",
+                  text: "User updated successfully!",       
+                  icon: "success",     
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4CAF50" 
+                  });
+
+    
     
   } catch (err) {
     console.error("Failed to update user:", err);
-    alert("Failed to update user!");
+    
+
+Swal.fire({
+              title: "Error!",
+              text: "Failed to update user!",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#e74c3c", 
+            })
+    
   }
 };
 
@@ -117,10 +156,25 @@ const updateUser = async (userId, payload) => {
     try {
       await axiosInstance.delete(`/api/user/${userId}`);
       setUsers(prev => prev.filter(u => u.id !== userId));
-      alert("User deleted successfully!");
+      Swal.fire({
+                  title: "Success!",
+                  text: "User deleted successfully!",       
+                  icon: "success",    
+                  confirmButtonText: "OK",
+                  confirmButtonColor: "#4CAF50" 
+                  });
+
+      
     } catch (error) {
       console.error("Error deleting user:", error);
-      alert("Failed to delete user!");
+      Swal.fire({
+              title: "Error!",
+              text: "Failed to delete user!",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#e74c3c", 
+            })
+      
     }
   };
 
@@ -134,7 +188,7 @@ const updateUser = async (userId, payload) => {
     );
   }
 
-  // Map permissions for rendering
+  
   const permissionMap = permissions.reduce((acc, perm) => {
     acc[perm.userId] = perm;
     return acc;
@@ -145,8 +199,7 @@ const updateUser = async (userId, payload) => {
     className="d-flex flex-column vh-100 vw-100"
     style={{ backgroundColor: "#1e293b", fontFamily: "Poppins, sans-serif" }}
   >
-    <Navbar />
-
+    
     <div className="container mt-4">
 
       {/* Header */}
@@ -173,7 +226,7 @@ const updateUser = async (userId, payload) => {
             className="table align-middle mb-0"
             style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
           >
-            {/* Table Head */}
+            
             <thead>
               <tr>
                 {["#", "Username", "Email", "Role", "Permissions", "Actions"].map(
@@ -195,7 +248,7 @@ const updateUser = async (userId, payload) => {
               </tr>
             </thead>
 
-            {/* Table Body */}
+            
             <tbody>
               {users.map((user, index) => {
                 const userPerm = permissionMap[user.id] || {
