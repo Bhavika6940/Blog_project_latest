@@ -14,8 +14,10 @@ export const getUser = () => {
   return user ? JSON.parse(user) : null;
 };
 export const setUser = (user) =>
-  localStorage.setItem("user", JSON.stringify(user));
-export const removeUser = () => localStorage.removeItem("user");
+  localStorage.setItem(
+    "user",
+    JSON.stringify(user)
+  );
 
 // --- Axios Instance (FIXED) ---
 const axiosInstance = axios.create({

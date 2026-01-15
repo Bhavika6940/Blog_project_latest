@@ -3,6 +3,7 @@ import { getUser } from "../../utils/authUtils";
 
 const Sidebar = () => {
   const user = getUser();
+  console.log("user role", user?.roleId);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -13,7 +14,7 @@ const Sidebar = () => {
   return (
     <div
       style={{
-        width: "260px",
+        width: "250px",
         height: "100vh",
         background: "linear-gradient(180deg, #0f172a, #1e293b)",
         boxShadow: "4px 0 12px rgba(0,0,0,0.4)",
@@ -27,7 +28,7 @@ const Sidebar = () => {
         zIndex: 1000,
       }}
     >
-      {/* Brand */}
+     
       <h3
         className="fw-bold mb-1"
         style={{ color: "#22c55e", letterSpacing: "1px" }}
@@ -35,7 +36,7 @@ const Sidebar = () => {
         BLOGIFY
       </h3>
 
-      {/* User Email */}
+      
       <p
         className="small mb-4"
         style={{ color: "#cbd5f5", wordBreak: "break-all" }}
@@ -43,7 +44,7 @@ const Sidebar = () => {
         {user?.email}
       </p>
 
-      {/* Navigation */}
+      
       <ul className="nav flex-column gap-2">
         {[
           { name: "Dashboard", path: "/dashboard", icon: "bi-speedometer2" },
@@ -51,7 +52,8 @@ const Sidebar = () => {
           { name: "Users", path: "/user", icon: "bi-people" },
           { name: "Categories", path: "/category", icon: "bi-tags" },
           { name: "Create Post", path: "/createBlog", icon: "bi-plus-circle" },
-          { name: "Posts", path: "/blog", icon: "bi-eye" },
+          // { name: "Posts", path: "/blog", icon: "bi-eye" },
+          { name: "Posts", path: "/posts", icon: "bi-file-earmark-text" },
         ].map((item) => (
           <li className="nav-item" key={item.name}>
             <NavLink
@@ -71,7 +73,6 @@ const Sidebar = () => {
         ))}
       </ul>
 
-      {/* Push Logout to Bottom */}
       <div className="mt-auto">
         <button
           className="btn btn-outline-danger btn-sm w-100 mt-4"

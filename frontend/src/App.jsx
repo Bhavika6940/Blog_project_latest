@@ -1,30 +1,35 @@
-import Roles from "./components/Role/Layout/RoleLayout";
+
 import {BrowserRouter , Routes, Route} from "react-router-dom";
-import Permissions from "./components/Permission/Layout/PermissionLayout";
-import Users from "./components/User/Layout/UserLayout";
-import  Category  from "./components/Category/Layout/CategoryLayout";
-import Login from "./components/Login/Login";
-import Dashboard from "./components/Dashboard/Layout/DashboardLayout";
-import CreatePost from "./components/Post/Layout/CreatePostLayout";
-import  Post from "./components/Post/Layout/PostLayout";
-import PostDetails from "./components/Post/Layout/PostDetailLayout";
+import {lazy , Suspense} from "react";
+
+const Permissions = lazy(() => import("./components/Permission/Layout/PermissionLayout"));
+const Users = lazy(() => import("./components/User/Layout/UserLayout"));
+const Category = lazy(() => import("./components/Category/Layout/CategoryLayout"));
+const Login = lazy(() => import( "./components/Login/Login"));
+const Dashboard = lazy(() => import( "./components/Dashboard/Layout/DashboardLayout"));
+const CreatePost = lazy(() => import( "./components/Post/Layout/CreatePostLayout"));
+const AdminPost = lazy(() => import( "./components/AdminPosts/Layout/AdminPostLayout"));
+const Roles = lazy(() => import( "./components/Role/Layout/RoleLayout"));
+const ProtectedRoute = lazy(() => import( "./routes/ProtectedRoute"));
+const RoleGuard = lazy(() => import( "./routes/RoleGuard"));
+
+
 
 function App() {
   return(
     <BrowserRouter>
+    <Suspense fallback= {<div>Loading...</div>}>
       <Routes>
-         <Route path = "/postContent/:id/post" element = {<PostDetails />} />
-        <Route path = "/blog" element = {<Post />} />
-        <Route path = "/createBlog" element= {<CreatePost />} />
         <Route path = "/" element= {<Login />} />
-        <Route path = "/dashboard" element = {<Dashboard/>} />
-        <Route path="/role" element={<Roles />} />
-        <Route path="/user" element={<Users />} />
-        <Route path="/roles/:roleId/permissions" element={<Permissions />} />
-        <Route path = "/category" element = {<Category />} />
+        <Route path = "/dashboard" element = {<ProtectedRoute><Dashboard/></ProtectedRoute>} />
+        <Route path="/role" element={<RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN"]}><Roles /></RoleGuard>} />
+        <Route path="/roles/:roleId/permissions" element={ <RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN"]}><Permissions /></RoleGuard>} />
+        <Route path="/user" element={<RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN"]}><Users /></RoleGuard>} />
+        <Route path = "/category" element = {<RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN"]}><Category /></RoleGuard>} />
+        <Route path = "/posts" element = { <RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN","AUTHOR"]}><AdminPost /></RoleGuard>} /> 
+        <Route path = "/createBlog" element= {<RoleGuard allowedRoles={["AUTHOR", "ADMIN", "SUPER_ADMIN"]}><CreatePost /></RoleGuard>} />
       </Routes>
-  
-    
+    </Suspense>
     </ BrowserRouter>
     
 

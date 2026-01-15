@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/authUtils";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../Sidebar/Sidebar";
 import Swal from "sweetalert2";
 
 
@@ -112,7 +111,6 @@ const CreatePost = () => {
 
           return (
             <>
-             <Navbar />
             <div
 				style={{
 					backgroundColor: "#1e293b",

@@ -1,19 +1,42 @@
-
-
-
 const Dashboard = () => {
   return (
-    <div style={{ backgroundColor: "#1e293b", minHeight: "100vh", fontFamily: "Poppins, sans-serif" }}>
-
+    <div
+      style={{
+        backgroundColor: "#1e293b",
+        minHeight: "100vh",
+        fontFamily: "Poppins, sans-serif",
+      }}
+    >
+      {/* Page Container */}
       <div className="container-fluid px-5 py-5">
 
         {/* Header */}
         <div className="mb-5 text-center">
-          <h1 className="fw-bold text-white display-4 mb-2" style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.5)" }}>
+          <h1
+            className="fw-bold display-4 mb-2"
+            style={{
+              color: "#ffffff",
+              textShadow: "2px 2px 8px rgba(0,0,0,0.5)",
+            }}
+          >
             Dashboard
           </h1>
-          <p className="fw-semibold text-light fs-5" style={{ maxWidth: "700px", margin: "0 auto", textAlign: "justify" }}>
-            Welcome to <span className="fw-bold text-warning">BLOGIFY</span>! Your centralized hub for managing content, users, roles, and permissions efficiently.
+
+          <p
+            className="fw-semibold fs-5"
+            style={{
+              color: "#e5e7eb",
+              maxWidth: "720px",
+              margin: "0 auto",
+              textAlign: "justify",
+            }}
+          >
+            Welcome to{" "}
+            <span style={{ color: "#facc15", fontWeight: "700" }}>
+              BLOGIFY
+            </span>
+            ! Your centralized hub for managing content, users, roles, and
+            permissions efficiently.
           </p>
         </div>
 
@@ -22,59 +45,152 @@ const Dashboard = () => {
           style={{
             height: "2px",
             backgroundColor: "#334155",
-            marginBottom: "50px",
-            borderRadius: "2px"
+            marginBottom: "3.5rem",
+            borderRadius: "2px",
           }}
         />
 
         {/* Main Content */}
         <div className="col-xxl-9 mx-auto">
 
-          <div className="card bg-slate-700 shadow-lg p-4 mb-5 rounded-4" style={{ backgroundColor: "#334155" }}>
-            <h3 className="fw-bold text-white mb-4">About Blogify</h3>
-            <p className="fw-semibold text-white fs-6 lh-lg" style={{ textAlign: "justify" }}>
-              <span className="fw-bold text-warning">Blogify</span> is a modern, scalable, and secure
-              content management system designed for professional blogging platforms
-              and enterprise-level applications.
+          {/* About Card */}
+          <div
+            style={{
+              backgroundColor: "#334155",
+              borderRadius: "1rem",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
+              padding: "2rem",
+              marginBottom: "3rem",
+            }}
+          >
+            <h3
+              style={{
+                color: "#facc15",
+                fontWeight: "700",
+                marginBottom: "1rem",
+              }}
+            >
+              About
+            </h3>
+
+            <p
+              style={{
+                color: "#ffffff",
+                fontWeight: "600",
+                lineHeight: "1.9",
+                textAlign: "justify",
+              }}
+            >
+              This is a modern, scalable, and secure content management system
+              designed for professional blogging platforms and enterprise-level
+              applications.
             </p>
 
-            <p className="fw-semibold text-white fs-6 lh-lg" style={{ textAlign: "justify" }}>
+            <p
+              style={{
+                color: "#ffffff",
+                fontWeight: "600",
+                lineHeight: "1.9",
+                textAlign: "justify",
+              }}
+            >
               The platform enables organizations to efficiently manage
-              <span className="fw-bold text-info"> blog content</span>,
-              <span className="fw-bold text-info"> categories</span>,
-              <span className="fw-bold text-info"> users</span>,
-              <span className="fw-bold text-info"> roles</span>, and
-              <span className="fw-bold text-info"> permissions</span> from a centralized
-              administrative interface.
+              <span style={{ color: "#38bdf8", fontWeight: "700" }}>
+                {" "}blog content
+              </span>
+              ,
+              <span style={{ color: "#38bdf8", fontWeight: "700" }}>
+                {" "}categories
+              </span>
+              ,
+              <span style={{ color: "#38bdf8", fontWeight: "700" }}>
+                {" "}users
+              </span>
+              ,
+              <span style={{ color: "#38bdf8", fontWeight: "700" }}>
+                {" "}roles
+              </span>
+              , and
+              <span style={{ color: "#38bdf8", fontWeight: "700" }}>
+                {" "}permissions
+              </span>{" "}
+              from a centralized administrative interface.
             </p>
 
-            <p className="fw-semibold text-white fs-6 lh-lg" style={{ textAlign: "justify" }}>
+            <p
+              style={{
+                color: "#ffffff",
+                fontWeight: "600",
+                lineHeight: "1.9",
+                textAlign: "justify",
+              }}
+            >
               Blogify is built with a focus on
-              <span className="fw-bold text-success"> performance</span>,
-              <span className="fw-bold text-success"> scalability</span>, and
-              <span className="fw-bold text-success"> security</span>, ensuring reliable content
-              delivery and strict access control across the system.
+              <span style={{ color: "#22c55e", fontWeight: "700" }}>
+                {" "}performance
+              </span>
+              ,
+              <span style={{ color: "#22c55e", fontWeight: "700" }}>
+                {" "}scalability
+              </span>
+              , and
+              <span style={{ color: "#22c55e", fontWeight: "700" }}>
+                {" "}security
+              </span>
+              , ensuring reliable content delivery and strict access control.
             </p>
 
-            <p className="fw-semibold text-white fs-6 lh-lg mb-4" style={{ textAlign: "justify" }}>
+            <p
+              style={{
+                color: "#ffffff",
+                fontWeight: "600",
+                lineHeight: "1.9",
+                textAlign: "justify",
+                marginBottom: "0",
+              }}
+            >
               This dashboard serves as the operational hub for managing platform
               configurations, monitoring system activity, and maintaining content
-              quality as the platform continues to evolve.
+              quality as the platform evolves.
             </p>
           </div>
 
           {/* Platform Capabilities */}
-          <div className="card shadow-lg p-4 rounded-4" style={{ backgroundColor: "#475569" }}>
-            <h4 className="fw-bold text-white mt-2 mb-3" style={{ borderBottom: "2px solid #facc15", display: "inline-block", paddingBottom: "4px" }}>
+          <div
+            style={{
+              backgroundColor: "#475569",
+              borderRadius: "1rem",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
+              padding: "2rem",
+            }}
+          >
+            <h4
+              style={{
+                color: "#ffffff",
+                fontWeight: "700",
+                borderBottom: "2px solid #facc15",
+                display: "inline-block",
+                paddingBottom: "4px",
+                marginBottom: "1.5rem",
+              }}
+            >
               Platform Capabilities
             </h4>
 
-            <ul className="text-white fw-semibold fs-6 lh-lg ps-3">
-              <li className="mb-2">Centralized user and role management</li>
-              <li className="mb-2">Structured content categorization</li>
-              <li className="mb-2">Secure permission-based access control</li>
-              <li className="mb-2">Scalable architecture for growing platforms</li>
-              <li className="mb-2">Optimized workflows for content teams</li>
+            <ul
+              style={{
+                color: "#ffffff",
+                fontWeight: "600",
+                lineHeight: "1.9",
+                paddingLeft: "1.2rem",
+                marginBottom: "0",
+              }}
+            >
+              <li>Centralized user and role management</li>
+              <li>Structured content categorization</li>
+              <li>Secure permission-based access control</li>
+              <li>Scalable architecture for growing platforms</li>
+              <li>Optimized workflows for content teams</li>
             </ul>
           </div>
 
