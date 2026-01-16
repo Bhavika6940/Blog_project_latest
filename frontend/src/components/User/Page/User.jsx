@@ -223,6 +223,7 @@ Swal.fire({
             borderRadius: "0.75rem",
             boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
           }}
+          onClick={() => setEdit(null)}
         >
           + Create User
         </button>

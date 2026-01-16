@@ -67,7 +67,6 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
 
     }
     catch(err){
-      e.stopPropagation();
       console.error("Submit failed:", err);
 
     }

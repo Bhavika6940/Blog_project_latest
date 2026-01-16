@@ -84,6 +84,7 @@ const Roles = () => {
           }}
           data-bs-toggle="modal"
           data-bs-target="#createRoleModal"
+          onClick={() => setEditRole(null)}
         >
           + Create Role
         </button>

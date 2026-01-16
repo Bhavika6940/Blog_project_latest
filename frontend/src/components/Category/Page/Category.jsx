@@ -94,6 +94,7 @@ const Category = () => {
             data-bs-toggle="modal"
             data-bs-target="#createCategoryModal"
             style={primaryBtn}
+            onClick={() => setEditCategory(null)}
           >
             + Add Category
           </button>

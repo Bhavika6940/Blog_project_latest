@@ -50,7 +50,7 @@ const CreateRoleModal = ({ onCreate, onUpdate , editRole }) => {
     
     }
     catch (err) {
-      e.stopPropagation();
+     
     console.error("Submit failed:", err);
     
   }
