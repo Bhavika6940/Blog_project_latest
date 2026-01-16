@@ -86,18 +86,22 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
         className="modal-content rounded-4 shadow-lg"
         onSubmit={handleSubmit}
         style={{
-          backgroundColor: "#1e293b",
-          border: "1px solid #334155"
+          background: "rgba(51, 65, 85, 0.9)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid #334155",
         }}
       >
         {/* Header */}
-        <div
-          className="modal-header border-0"
-          style={{ backgroundColor: "#334155" }}
-        >
-          <h5 className="modal-title text-white fw-bold">
-            {editUser ? "Update User" : "Create User"}
-          </h5>
+        <div className="modal-header border-0 px-4 pt-4 pb-3">
+          <div>
+            <h5 className="fw-bold mb-1" style={{ color: "#facc15" }}>
+              {editUser ? "Update User" : "Create New User"}
+            </h5>
+            <p className="mb-0" style={{ color: "#cbd5f5", fontSize: "0.9rem" }}>
+              Manage user identity and role assignment
+            </p>
+          </div>
+
           <button
             type="button"
             className="btn-close btn-close-white"
@@ -105,75 +109,79 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
           />
         </div>
 
+        {/* Divider */}
+        <div
+          style={{
+            height: "1px",
+            background:
+              "linear-gradient(to right, transparent, #facc15, transparent)",
+          }}
+        />
+
         {/* Body */}
         <div className="modal-body px-4 py-4">
-          <div className="mb-3">
-            <label className="form-label text-white fw-semibold">
+          {/* Username */}
+          <div className="mb-4">
+            <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Username
             </label>
             <input
               type="text"
               name="username"
               className="form-control"
-              placeholder="Enter username"
+              placeholder="e.g. john_doe"
               value={formData.username}
               onChange={handleChange}
               required
-              style={{
-                backgroundColor: "#0f172a",
-                border: "1px solid #334155",
-                color: "#e5e7eb",
-                padding: "10px 12px"
-              }}
+              style={inputStyle}
             />
           </div>
 
-          <div className="mb-3">
-            <label className="form-label text-white fw-semibold">
+          {/* Email */}
+          <div className="mb-4">
+            <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Email Address
             </label>
             <input
               type="email"
               name="email"
               className="form-control"
-              placeholder="Enter email"
+              placeholder="john@example.com"
               value={formData.email}
               onChange={handleChange}
               required
-              style={{
-                backgroundColor: "#0f172a",
-                border: "1px solid #334155",
-                color: "#e5e7eb",
-                padding: "10px 12px"
-              }}
+              style={inputStyle}
             />
           </div>
 
-          <div className="mb-3">
-            <label className="form-label text-white fw-semibold">
+          {/* Password */}
+          <div className="mb-4">
+            <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Password
             </label>
             <input
               type="password"
               name="password"
               className="form-control"
-              placeholder={editUser ? "Password cannot be changed" : "Enter password"}
+              placeholder={
+                editUser ? "Password cannot be changed" : "Enter secure password"
+              }
               value={formData.password}
               onChange={handleChange}
               required={!editUser}
               disabled={editUser}
               style={{
+                ...inputStyle,
                 backgroundColor: editUser ? "#020617" : "#0f172a",
-                border: "1px solid #334155",
-                color: "#e5e7eb",
-                padding: "10px 12px",
-                cursor: editUser ? "not-allowed" : "text"
+                cursor: editUser ? "not-allowed" : "text",
+                opacity: editUser ? 0.7 : 1,
               }}
             />
           </div>
 
-          <div className="mb-2">
-            <label className="form-label text-white fw-semibold">
+          {/* Role */}
+          <div>
+            <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Role
             </label>
             <select
@@ -182,12 +190,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
               value={formData.roleId}
               onChange={handleChange}
               required
-              style={{
-                backgroundColor: "#0f172a",
-                border: "1px solid #334155",
-                color: "#e5e7eb",
-                padding: "10px 12px"
-              }}
+              style={inputStyle}
             >
               <option value="" style={{ color: "#94a3b8" }}>
                 Select role
@@ -205,22 +208,30 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
         <div className="modal-footer border-0 px-4 pb-4">
           <button
             type="button"
-            className="btn btn-outline-light"
+            className="btn fw-semibold"
             data-bs-dismiss="modal"
+            style={{
+              backgroundColor: "#334155",
+              color: "#e5e7eb",
+              borderRadius: "0.6rem",
+            }}
           >
             Cancel
           </button>
+
           <button
             type="submit"
-            className="btn fw-semibold text-white"
+            className="btn fw-bold"
             data-bs-dismiss="modal"
             style={{
-              background: "linear-gradient(135deg, #2563eb, #1e40af)",
-              border: "none",
-              padding: "8px 24px"
+              backgroundColor: "#facc15",
+              color: "#020617",
+              borderRadius: "0.6rem",
+              padding: "8px 28px",
+              boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
             }}
           >
-            {editUser ? "Update" : "Create"}
+            {editUser ? "Update User" : "Create User"}
           </button>
         </div>
       </form>
@@ -228,6 +239,14 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
   </div>
 );
 
+};
+
+const inputStyle = {
+  backgroundColor: "#0f172a",
+  border: "1px solid #334155",
+  color: "#e5e7eb",
+  padding: "12px",
+  borderRadius: "0.6rem",
 };
 
 export default CreateUserModal;

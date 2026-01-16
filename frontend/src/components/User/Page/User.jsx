@@ -196,49 +196,85 @@ Swal.fire({
 
  return (
   <div
-    className="d-flex flex-column vh-100 vw-100"
-    style={{ backgroundColor: "#1e293b", fontFamily: "Poppins, sans-serif" }}
+    style={{
+      minHeight: "100vh",
+      background: "linear-gradient(135deg, #0f172a, #1e293b)",
+      fontFamily: "Poppins, sans-serif",
+    }}
   >
-    
-    <div className="container mt-4">
+    <div className="container-fluid px-5 py-5">
 
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h3 className="fw-bold text-white">User Management</h3>
+        <div>
+          <h2 className="fw-bold text-white mb-1">User Management</h2>
+          <p style={{ color: "#cbd5f5" }} className="mb-0">
+            Manage users, roles, and permission access.
+          </p>
+        </div>
+
         <button
-          className="btn btn-warning fw-semibold"
+          className="btn fw-bold px-4 py-2"
           data-bs-toggle="modal"
           data-bs-target="#createUserModal"
+          style={{
+            backgroundColor: "#facc15",
+            color: "#020617",
+            borderRadius: "0.75rem",
+            boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
+          }}
         >
-          <i className="bi bi-plus-circle me-2"></i>
-          Create User
+          + Create User
         </button>
       </div>
 
+      {/* Divider */}
+      <div
+        style={{
+          height: "1px",
+          background:
+            "linear-gradient(to right, transparent, #facc15, transparent)",
+          marginBottom: "3rem",
+        }}
+      />
+
+      {/* Content */}
       {users.length === 0 ? (
-        <div className="text-center text-light mt-5">No users found.</div>
+        <div className="text-center fw-semibold" style={{ color: "#e5e7eb" }}>
+          No users found. Create your first user to get started.
+        </div>
       ) : (
         <div
-          className="table-responsive rounded-4 shadow-lg p-3"
-          style={{ backgroundColor: "#334155" }}
+          className="table-responsive rounded-4 p-4"
+          style={{
+            background: "rgba(51, 65, 85, 0.85)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+          }}
         >
           <table
             className="table align-middle mb-0"
-            style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
+            style={{
+              borderCollapse: "separate",
+              borderSpacing: "0 12px",
+            }}
           >
-            
+            {/* Table Head */}
             <thead>
               <tr>
-                {["#", "Username", "Email", "Role", "Permissions", "Actions"].map(
+                {["#", "User", "Email", "Role", "Permissions", "Actions"].map(
                   (head, i) => (
                     <th
                       key={i}
                       style={{
-                        backgroundColor: "#475569",
+                        backgroundColor: "#334155",
                         color: "#f8fafc",
                         fontWeight: "700",
                         border: "none",
-                        padding: "14px"
+                        padding: "14px",
+                        fontSize: "0.85rem",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.6px",
                       }}
                     >
                       {head}
@@ -248,128 +284,140 @@ Swal.fire({
               </tr>
             </thead>
 
-            
+            {/* Table Body */}
             <tbody>
               {users.map((user, index) => {
                 const userPerm = permissionMap[user.id] || {
                   canRead: false,
                   canWrite: false,
-                  canDelete: false
+                  canDelete: false,
                 };
 
                 return (
-                  <tr key={user.id} style={{ transition: "all 0.2s ease" }}>
-                      {[
-                        index + 1,
-                        user.username,
-                        user.email,
-                        "ROLE",
-                        "PERMISSIONS",
-                        "ACTIONS"
-                      ].map((_, colIndex) => (
-                        <td
-                          key={colIndex}
-                          style={{
-                            backgroundColor:
-                              index % 2 === 0 ? "#334155" : "#3f4f67",
-                            color: "#e5e7eb",
-                            border: "none",
-                            padding: "14px",
-                            verticalAlign: "middle"
-                          }}
-                        >
-                          {colIndex === 0 && <span className="fw-semibold">{index + 1}</span>}
-                          {colIndex === 1 && <span className="fw-semibold">{user.username}</span>}
-                          {colIndex === 2 && user.email}
+                  <tr key={user.id}>
+                    {/* Index */}
+                    <td style={cellStyle(index)}>
+                      <span className="fw-semibold">{index + 1}</span>
+                    </td>
 
-                          {colIndex === 3 && (
-                          <span
-                            className="fw-semibold text-uppercase"
-                            style={{
-                              minWidth: "110px",
-                              height: "30px",
-                              lineHeight: "30px",
-                              textAlign: "center",
-                              display: "inline-block",
-                              fontSize: "0.75rem",
-                              letterSpacing: "0.6px",
-                              borderRadius: "999px",
-                              color: "#e0e7ff",
-                              background: "linear-gradient(135deg, #1e40af, #2563eb)",
-                              boxShadow: "0 2px 6px rgba(37, 99, 235, 0.35)",
-                              border: "1px solid rgba(255,255,255,0.12)",
-                              whiteSpace: "nowrap"
-                            }}
+                    {/* Username */}
+                    <td style={cellStyle(index)}>
+                      <span className="fw-semibold">{user.username}</span>
+                    </td>
+
+                    {/* Email */}
+                    <td style={cellStyle(index)}>{user.email}</td>
+
+                    {/* Role Badge */}
+                    <td style={cellStyle(index)}>
+                      <span
+                        style={{
+                          padding: "6px 14px",
+                          borderRadius: "999px",
+                          fontSize: "0.75rem",
+                          fontWeight: "700",
+                          letterSpacing: "0.6px",
+                          color: "#e0e7ff",
+                          background:
+                            "linear-gradient(135deg, #1e40af, #2563eb)",
+                          boxShadow:
+                            "0 2px 6px rgba(37, 99, 235, 0.35)",
+                        }}
+                      >
+                        {roleMap[user.roleId]}
+                      </span>
+                    </td>
+
+                    {/* Permissions */}
+                    <td style={cellStyle(index)}>
+                      <div className="d-flex gap-3">
+                        {["canRead", "canWrite", "canDelete"].map((field) => (
+                          <div
+                            className="form-check form-switch"
+                            key={field}
                           >
-                            {roleMap[user.roleId]}
-                          </span>
-                        )}
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              checked={userPerm[field]}
+                              onChange={() =>
+                                togglePermission(user.id, field)
+                              }
+                            />
+                            <label
+                              className="form-check-label"
+                              style={{ color: "#e5e7eb" }}
+                            >
+                              {field.replace("can", "")}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </td>
 
-                          {colIndex === 4 && (
-                            <div className="d-flex gap-3">
-                              {["canRead", "canWrite", "canDelete"].map(field => (
-                                <div className="form-check form-switch" key={field}>
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={userPerm[field]}
-                                    onChange={() => togglePermission(user.id, field)}
-                                  />
-                                  <label className="form-check-label text-white">
-                                    {field.replace("can", "")}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                    {/* Actions */}
+                    <td style={cellStyle(index)}>
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-sm"
+                          style={{
+                            backgroundColor: "#22c55e",
+                            color: "#020617",
+                          }}
+                          onClick={() => savePermissions(user.id)}
+                        >
+                          ✓
+                        </button>
 
-                          {colIndex === 5 && (
-                            <>
-                              <button
-                                className="btn btn-success btn-sm me-2"
-                                onClick={() => savePermissions(user.id)}
-                              >
-                                <i className="bi bi-check2-circle"></i>
-                              </button>
+                        <button
+                          className="btn btn-sm"
+                          style={{
+                            backgroundColor: "#38bdf8",
+                            color: "#020617",
+                          }}
+                          onClick={() => setEdit(user)}
+                          data-bs-toggle="modal"
+                          data-bs-target="#createUserModal"
+                        >
+                          ✎
+                        </button>
 
-                              <button
-                                className="btn btn-primary btn-sm me-2"
-                                onClick={() => setEdit(user)}
-                                data-bs-toggle="modal"
-                                data-bs-target="#createUserModal"
-                              >
-                                <i className="bi bi-pencil"></i>
-                              </button>
-
-                              <button
-                                className="btn btn-danger btn-sm"
-                                onClick={() => handleDelete(user.id)}
-                              >
-                                <i className="bi bi-trash"></i>
-                              </button>
-                            </>
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-
+                        <button
+                          className="btn btn-sm"
+                          style={{
+                            backgroundColor: "#ef4444",
+                            color: "#020617",
+                          }}
+                          onClick={() => handleDelete(user.id)}
+                        >
+                          🗑
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
       )}
-    </div>
 
-    <CreateUserModal
-      roles={roles}
-      onCreate={createUser}
-      onUpdate={updateUser}
-      editUser={editUser}
-    />
+      <CreateUserModal
+        roles={roles}
+        onCreate={createUser}
+        onUpdate={updateUser}
+        editUser={editUser}
+      />
+    </div>
   </div>
 );
 
 };
+const cellStyle = (index) => ({
+  backgroundColor: index % 2 === 0 ? "#334155" : "#3f4f67",
+  color: "#e5e7eb",
+  border: "none",
+  padding: "14px",
+});
 
 export default Users;

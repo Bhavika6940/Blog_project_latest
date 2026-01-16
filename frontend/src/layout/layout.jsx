@@ -1,38 +1,56 @@
 import AdminSidebar from "../components/Sidebar/AdminSidebar";
 import AuthorSidebar from "../components/Sidebar/AuthorSidebar";
 
+const SIDEBAR_WIDTH = 260;
+
 const Layout = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("user"));
+    } catch {
+      return null;
+    }
+  })();
+
   const roleId = user?.roleId;
 
+  const sidebarMap = {
+    admin: [1, 2],
+    author: [3],
+  };
+
   const renderSidebar = () => {
-    if (roleId === 1 || roleId === 2) {
+    if (sidebarMap.admin.includes(roleId)) {
       return <AdminSidebar />;
     }
 
-    if (roleId === 3) {
+    if (sidebarMap.author.includes(roleId)) {
       return <AuthorSidebar />;
     }
 
-    return null; // or a default sidebar
+    return null;
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #0f172a, #1e293b)",
+      }}
+    >
       {renderSidebar()}
-
-      <div
+      <main
         style={{
           flexGrow: 1,
-          marginLeft: "260px",
-          minHeight: "100vh",
-          backgroundColor: "#1e293b",
-          padding: "30px",
+          marginLeft: SIDEBAR_WIDTH,
+          padding: "2rem",
           fontFamily: "Poppins, sans-serif",
+          color: "#e5e7eb",
         }}
       >
         {children}
-      </div>
+      </main>
     </div>
   );
 };

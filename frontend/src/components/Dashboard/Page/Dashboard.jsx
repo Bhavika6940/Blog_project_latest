@@ -1,102 +1,96 @@
 const Dashboard = () => {
+  const pageStyle = {
+    minHeight: "100vh",
+    background: "linear-gradient(135deg, #0f172a, #1e293b)",
+    fontFamily: "Poppins, sans-serif",
+  };
+
+  const cardStyle = {
+    background: "rgba(51, 65, 85, 0.85)",
+    backdropFilter: "blur(8px)",
+    borderRadius: "1rem",
+    boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+    padding: "2.2rem",
+  };
+
   return (
-    <div
-      style={{
-        backgroundColor: "#1e293b",
-        minHeight: "100vh",
-        fontFamily: "Poppins, sans-serif",
-      }}
-    >
-      {/* Page Container */}
+    <div style={pageStyle}>
       <div className="container-fluid px-5 py-5">
 
-        {/* Header */}
-        <div className="mb-5 text-center">
+        {/* ===== HERO HEADER ===== */}
+        <div className="text-center mb-5">
           <h1
-            className="fw-bold display-4 mb-2"
+            className="fw-bold display-4 mb-3"
             style={{
               color: "#ffffff",
-              textShadow: "2px 2px 8px rgba(0,0,0,0.5)",
+              letterSpacing: "0.5px",
             }}
           >
-            Dashboard
+             Dashboard
           </h1>
 
           <p
-            className="fw-semibold fs-5"
+            className="fs-5 fw-semibold mx-auto"
             style={{
-              color: "#e5e7eb",
-              maxWidth: "720px",
-              margin: "0 auto",
-              textAlign: "justify",
+              color: "#cbd5f5",
+              maxWidth: "760px",
+              lineHeight: "1.8",
             }}
           >
             Welcome to{" "}
             <span style={{ color: "#facc15", fontWeight: "700" }}>
               BLOGIFY
-            </span>
-            ! Your centralized hub for managing content, users, roles, and
-            permissions efficiently.
+            </span>{" "}
+            — a centralized platform designed to manage content, users,
+            permissions, and system workflows with precision and control.
           </p>
         </div>
 
-        {/* Divider */}
+        {/* ===== DIVIDER ===== */}
         <div
           style={{
-            height: "2px",
-            backgroundColor: "#334155",
-            marginBottom: "3.5rem",
-            borderRadius: "2px",
+            height: "1px",
+            background:
+              "linear-gradient(to right, transparent, #facc15, transparent)",
+            marginBottom: "4rem",
           }}
         />
 
-        {/* Main Content */}
         <div className="col-xxl-9 mx-auto">
 
-          {/* About Card */}
-          <div
-            style={{
-              backgroundColor: "#334155",
-              borderRadius: "1rem",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
-              padding: "2rem",
-              marginBottom: "3rem",
-            }}
-          >
+          {/* ===== ABOUT CARD ===== */}
+          <div style={{ ...cardStyle, marginBottom: "3rem" }}>
             <h3
-              style={{
-                color: "#facc15",
-                fontWeight: "700",
-                marginBottom: "1rem",
-              }}
+              className="fw-bold mb-3"
+              style={{ color: "#facc15" }}
             >
-              About
+              About 
             </h3>
 
             <p
               style={{
-                color: "#ffffff",
-                fontWeight: "600",
+                color: "#e5e7eb",
+                fontWeight: "500",
                 lineHeight: "1.9",
                 textAlign: "justify",
               }}
             >
-              This is a modern, scalable, and secure content management system
-              designed for professional blogging platforms and enterprise-level
-              applications.
+              Blogify is a modern, scalable, and secure content management
+              platform engineered for professional blogging ecosystems and
+              enterprise-grade applications.
             </p>
 
             <p
               style={{
-                color: "#ffffff",
-                fontWeight: "600",
+                color: "#e5e7eb",
+                fontWeight: "500",
                 lineHeight: "1.9",
                 textAlign: "justify",
               }}
             >
-              The platform enables organizations to efficiently manage
+              It enables seamless management of
               <span style={{ color: "#38bdf8", fontWeight: "700" }}>
-                {" "}blog content
+                {" "}blog posts
               </span>
               ,
               <span style={{ color: "#38bdf8", fontWeight: "700" }}>
@@ -114,18 +108,19 @@ const Dashboard = () => {
               <span style={{ color: "#38bdf8", fontWeight: "700" }}>
                 {" "}permissions
               </span>{" "}
-              from a centralized administrative interface.
+              from a unified administrative interface.
             </p>
 
             <p
               style={{
-                color: "#ffffff",
-                fontWeight: "600",
+                color: "#e5e7eb",
+                fontWeight: "500",
                 lineHeight: "1.9",
                 textAlign: "justify",
+                marginBottom: 0,
               }}
             >
-              Blogify is built with a focus on
+              Designed with a strong emphasis on
               <span style={{ color: "#22c55e", fontWeight: "700" }}>
                 {" "}performance
               </span>
@@ -137,41 +132,19 @@ const Dashboard = () => {
               <span style={{ color: "#22c55e", fontWeight: "700" }}>
                 {" "}security
               </span>
-              , ensuring reliable content delivery and strict access control.
-            </p>
-
-            <p
-              style={{
-                color: "#ffffff",
-                fontWeight: "600",
-                lineHeight: "1.9",
-                textAlign: "justify",
-                marginBottom: "0",
-              }}
-            >
-              This dashboard serves as the operational hub for managing platform
-              configurations, monitoring system activity, and maintaining content
-              quality as the platform evolves.
+              , Blogify ensures reliable content delivery and strict access
+              control as your platform evolves.
             </p>
           </div>
 
-          {/* Platform Capabilities */}
-          <div
-            style={{
-              backgroundColor: "#475569",
-              borderRadius: "1rem",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
-              padding: "2rem",
-            }}
-          >
+          {/* ===== CAPABILITIES ===== */}
+          <div style={cardStyle}>
             <h4
+              className="fw-bold mb-4"
               style={{
                 color: "#ffffff",
-                fontWeight: "700",
-                borderBottom: "2px solid #facc15",
-                display: "inline-block",
-                paddingBottom: "4px",
-                marginBottom: "1.5rem",
+                borderLeft: "4px solid #facc15",
+                paddingLeft: "0.75rem",
               }}
             >
               Platform Capabilities
@@ -179,18 +152,18 @@ const Dashboard = () => {
 
             <ul
               style={{
-                color: "#ffffff",
-                fontWeight: "600",
-                lineHeight: "1.9",
+                color: "#e5e7eb",
+                fontWeight: "500",
+                lineHeight: "2",
                 paddingLeft: "1.2rem",
-                marginBottom: "0",
+                marginBottom: 0,
               }}
             >
-              <li>Centralized user and role management</li>
-              <li>Structured content categorization</li>
-              <li>Secure permission-based access control</li>
-              <li>Scalable architecture for growing platforms</li>
-              <li>Optimized workflows for content teams</li>
+              <li>Centralized user & role management</li>
+              <li>Structured and categorized content workflows</li>
+              <li>Permission-based secure access control</li>
+              <li>Scalable architecture for enterprise growth</li>
+              <li>Optimized admin experience for content teams</li>
             </ul>
           </div>
 

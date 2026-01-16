@@ -56,17 +56,32 @@ const Roles = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#1e293b", minHeight: "100vh", fontFamily: "Poppins, sans-serif" }}>
-      {/* Header Section */}
-      <div className="d-flex justify-content-between align-items-center px-5 py-4">
-        <h3
-          className="fw-bold text-white"
-          style={{ textShadow: "2px 2px 6px rgba(0,0,0,0.5)" }}
-        >
-          Role Management
-        </h3>
+  <div
+    style={{
+      minHeight: "100vh",
+      background: "linear-gradient(135deg, #0f172a, #1e293b)",
+      fontFamily: "Poppins, sans-serif",
+    }}
+  >
+    <div className="container-fluid px-5 py-5">
+
+      {/* Header */}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 className="fw-bold text-white mb-1">Role Management</h2>
+          <p className="text-slate-300 mb-0" style={{ color: "#cbd5f5" }}>
+            Define roles and control access permissions across the platform
+          </p>
+        </div>
+
         <button
-          className="btn btn-warning fw-bold shadow-sm"
+          className="btn fw-bold px-4 py-2"
+          style={{
+            backgroundColor: "#facc15",
+            color: "#020617",
+            borderRadius: "0.75rem",
+            boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
+          }}
           data-bs-toggle="modal"
           data-bs-target="#createRoleModal"
         >
@@ -77,43 +92,51 @@ const Roles = () => {
       {/* Divider */}
       <div
         style={{
-          height: "2px",
-          backgroundColor: "#334155",
-          margin: "0 20px 20px 20px",
-          borderRadius: "2px",
+          height: "1px",
+          background:
+            "linear-gradient(to right, transparent, #facc15, transparent)",
+          marginBottom: "3rem",
         }}
       />
 
-      {/* Roles Content */}
+      {/* Content */}
       <div
-        className="container-fluid px-5 overflow-auto"
-        style={{ flexGrow: 1, maxHeight: "75vh" }}
+        style={{
+          background: "rgba(51, 65, 85, 0.85)",
+          backdropFilter: "blur(10px)",
+          borderRadius: "1rem",
+          padding: "2.5rem",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+        }}
       >
-        <div className="row g-4">
-          {roles.length === 0 && (
-            <p className="text-white text-center fw-semibold mt-5">
-              No roles found. Create your first role to get started.
-            </p>
-          )}
-
-          {roles.map((role) => (
-            <div key={role.id} className="col-md-6 col-lg-4">
-              <div className="card shadow-lg rounded-4 bg-slate-700 p-3 h-100">
+        {roles.length === 0 ? (
+          <p className="text-center fw-semibold" style={{ color: "#e5e7eb" }}>
+            No roles found. Create your first role to start managing access.
+          </p>
+        ) : (
+          <div className="row g-4">
+            {roles.map((role) => (
+              <div key={role.id} className="col-md-6 col-lg-4">
                 <RoleCard
                   role={role}
                   onSelectEdit={setEditRole}
                   onEdit={updateRole}
                 />
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Create/Edit Role Modal */}
-      <CreateRoleModal onCreate={addRole} onUpdate={updateRole} editRole={editRole} />
+      <CreateRoleModal
+        onCreate={addRole}
+        onUpdate={updateRole}
+        editRole={editRole}
+      />
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Roles;

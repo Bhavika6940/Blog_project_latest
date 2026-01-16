@@ -63,190 +63,270 @@ const AdminPosts = () => {
     if(loading){
         return <p className="text-light">Loading posts...</p>;
     }
-    return (
-  <div
-    className="container-fluid"
-    style={{ fontFamily: "Poppins, sans-serif" }}
-  >
-    <h3 className="fw-bold text-white mb-4"> All Posts</h3>
+     return (
+    <div style={pageStyle}>
+      <div className="container-fluid px-5 py-5">
+        
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h3 className="fw-bold text-white mb-1">All Posts</h3>
+            <p className="mb-0" style={{ color: "#cbd5f5" }}>
+              Manage all posts with ease.
+            </p>
+          </div>
+         
+        </div>
 
-    <div
-      className="table-responsive rounded-4 shadow-lg p-3"
-      style={{ backgroundColor: "#334155" }}
-    >
-      <table
-        className="table align-middle mb-0"
-        style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
-      >
-        <thead>
-          <tr>
-            {[
-              "#",
-              "Image",
-              "Title",
-              "Author",
-              "Category",
-              "Status",
-              "Views",
-              "Content",
-              "Actions",
-            ].map((head, i) => (
-              <th
-                key={i}
-                style={{
-                  backgroundColor: "#475569",
-                  color: "#f8fafc",
-                  fontWeight: "700",
-                  border: "none",
-                  padding: "14px",
-                }}
-              >
-                {head}
-              </th>
-            ))}
-          </tr>
-        </thead>
+        {/* Divider */}
+        <div style={dividerStyle} />
 
-        <tbody>
-          {posts.map((post, index) => (
-            <tr key={post.id}>
-              {Array.from({ length: 9 }).map((_, colIndex) => (
-                <td
-                  key={colIndex}
-                  style={{
-                    backgroundColor:
-                      index % 2 === 0 ? "#334155" : "#3f4f67",
-                    color: "#e5e7eb",
-                    border: "none",
-                    padding: "14px",
-                    verticalAlign: "middle",
-                  }}
-                >
-                  {/* Index */}
-                  {colIndex === 0 && (
-                    <span className="fw-semibold">{index + 1}</span>
-                  )}
+        {/* Table */}
+        <div style={tableCardStyle}>
+          <table
+            className="table align-middle mb-0"
+            style={{ borderCollapse: "separate", borderSpacing: "0 12px" }}
+          >
+            <thead>
+              <tr>
+                {[
+                  "#",
+                  "Image",
+                  "Title",
+                  "Author",
+                  "Category",
+                  "Status",
+                  "Views",
+                  "Content",
+                  "Actions",
+                ].map((head, i) => (
+                  <th
+                    key={head}
+                    style={{ ...tableHeadStyle, width: colWidths[i] }}
+                  >
+                    {head}
+                  </th>
+                ))}
+              </tr>
+            </thead>
 
-                  {/* Image */}
-                  {colIndex === 1 && (
-                    post.image ? (
-                      <img
-                        src={`${import.meta.env.VITE_API_BASE_URL}/public/${post.image}`}
-                        alt={post.title}
+            <tbody>
+              {posts.length ? (
+                posts.map((post, index) => (
+                  <tr key={post.id}>
+                    {Array.from({ length: 9 }).map((_, colIndex) => (
+                      <td
+                        key={colIndex}
                         style={{
-                          width: "70px",
-                          height: "44px",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                          boxShadow: "0 2px 6px rgba(0,0,0,.35)",
+                          ...cellStyle(index),
+                          width: colWidths[colIndex],
                         }}
-                      />
-                    ) : (
-                      <span className="text-muted">No Image</span>
-                    )
-                  )}
-
-                  {/* Title */}
-                  {colIndex === 2 && (
-                    <span className="fw-semibold">{post.title}</span>
-                  )}
-
-                  {/* Author */}
-                  {colIndex === 3 && (post.user?.email || "N/A")}
-
-                  {/* Category */}
-                  {colIndex === 4 && (post.category?.name || "N/A")}
-
-                  {/* Status */}
-                  {colIndex === 5 && (
-                    <span
-                      className="fw-semibold text-uppercase"
-                      style={{
-                        minWidth: "70px",
-                        height: "28px",
-                        lineHeight: "28px",
-                        textAlign: "center",
-                        display: "inline-block",
-                        fontSize: "0.7rem",
-                        borderRadius: "999px",
-                        color:
-                          post.status === "Published"
-                            ? "#dcfce7"
-                            : "#fef9c3",
-                        background:
-                          post.status === "Published"
-                            ? "linear-gradient(135deg, #15803d, #22c55e)"
-                            : "linear-gradient(135deg, #a16207, #facc15)",
-                      }}
-                    >
-                      {post.status}
-                    </span>
-                  )}
-
-                  {/* Views */}
-                  {colIndex === 6 && post.views}
-
-                  {/* Content */}
-                  {colIndex === 7 && (
-                    <div style={{ maxWidth: "250px" }}>
-                      {expandedRow === post.id
-                        ? post.content
-                        : `${getPreview(post.content)}...`}
-                      {/* <button
-                        className="btn btn-link btn-sm text-info p-0 ms-1"
-                        onClick={() => toggleExpand(post.id)}
                       >
-                        {expandedRow === post.id ? "Show less" : "Read more"}
-                      </button> */}
-                    </div>
-                  )}
+                        {/* Index */}
+                        {colIndex === 0 && <span className="fw-semibold">{index + 1}</span>}
 
-                  {/* Actions */}
-                  {colIndex === 8 && (
-                        <div className="d-flex align-items-center gap-2 flex-nowrap">
-                            <button className="btn btn-primary btn-sm"
-                            onClick={() => setPostToEdit(post)}
-                                data-bs-toggle="modal"
-                                data-bs-target="#editPostModal">
-                            <i className="bi bi-pencil"></i>
-                            </button>
-
-                            <button className="btn btn-danger btn-sm"
-                            onClick={() => handleDelete(post.id)}>
-                            <i className="bi bi-trash"></i>
-                            </button>
-                        </div>
+                        {/* Image */}
+                        {colIndex === 1 && (
+                          post.image ? (
+                            <img
+                              src={`${import.meta.env.VITE_API_BASE_URL}/public/${post.image}`}
+                              alt={post.title}
+                              style={{ ...imageStyle, width: colWidths[1] }}
+                            />
+                          ) : (
+                            <span className="text-muted">No Image</span>
+                          )
                         )}
 
-                </td>
-              ))}
-            </tr>
-          ))}
+                        {/* Title */}
+                        {colIndex === 2 && (
+                            <span className="fw-semibold" style={titleStyle}>
+                              {post.title}
+                            </span>
+                          )}
 
-          {posts.length === 0 && (
-            <tr>
-              <td
-                colSpan="9"
-                className="text-center text-muted"
-                style={{ padding: "20px" }}
-              >
-                No posts found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <EditPostModal
+                        {/* Author */}
+                        {colIndex === 3 && (post.user?.email || "N/A")}
+
+                        {/* Category */}
+                        {colIndex === 4 && (post.category?.name || "N/A")}
+
+                        {/* Status */}
+                        {colIndex === 5 && <span style={statusBadgeStyle(post.status)}>{post.status}</span>}
+
+                        {/* Views */}
+                        {colIndex === 6 && post.views}
+
+                        {/* Content */}
+                        {colIndex === 7 && (
+                            <div style={{ maxWidth: colWidths[7], ...textTwoLines }}>
+                              {expandedRow === post.id
+                                ? post.content
+                                : `${getPreview(post.content)}...`}
+                            </div>
+                          )}
+                        {/* Actions */}
+                        {colIndex === 8 && (
+                          <div className="d-flex gap-2 justify-content-center">
+                            <button
+                              className="btn btn-sm"
+                              style={editBtn}
+                              onClick={() => setPostToEdit(post)}
+                              data-bs-toggle="modal"
+                              data-bs-target="#editPostModal"
+                            >
+                              ✎
+                            </button>
+                            <button
+                              className="btn btn-sm"
+                              style={deleteBtn}
+                              onClick={() => handleDelete(post.id)}
+                            >
+                              🗑
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="9" style={emptyStateStyle}>
+                    No posts found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+
+          {/* Modals */}
+          <EditPostModal
             post={postToEdit}
             categories={categories}
             onSuccess={fetchPosts}
-            />
-
-      
+          />
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
 
 }
+
+const pageStyle = {
+  minHeight: "100vh",
+  background: "linear-gradient(135deg, #0f172a, #1e293b)",
+  fontFamily: "Poppins, sans-serif",
+};
+
+const dividerStyle = {
+  height: "1px",
+  background: "linear-gradient(to right, transparent, #facc15, transparent)",
+  marginBottom: "3rem",
+};
+
+const tableCardStyle = {
+  background: "rgba(51, 65, 85, 0.85)",
+  backdropFilter: "blur(10px)",
+  borderRadius: "1rem",
+  padding: "1.5rem",
+  boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+};
+
+const tableHeadStyle = {
+  backgroundColor: "#334155",
+  color: "#f8fafc",
+  border: "none",
+  padding: "14px",
+  fontWeight: "700",
+  fontSize: "0.85rem",
+  textTransform: "uppercase",
+  letterSpacing: "0.6px",
+};
+
+const cellStyle = (i) => ({
+  backgroundColor: i % 2 === 0 ? "#334155" : "#3f4f67",
+  color: "#e5e7eb",
+  border: "none",
+  padding: "14px",
+  verticalAlign: "middle",
+});
+
+const imageStyle = {
+  width: "70px",
+  height: "44px",
+  objectFit: "cover",
+  borderRadius: "0.5rem",
+  boxShadow: "0 2px 6px rgba(0,0,0,.35)",
+};
+
+const statusBadgeStyle = (status) => ({
+  minWidth: "70px",
+  height: "28px",
+  lineHeight: "28px",
+  textAlign: "center",
+  display: "inline-block",
+  fontSize: "0.7rem",
+  borderRadius: "999px",
+  color: status === "Published" ? "#dcfce7" : "#fef9c3",
+  background:
+    status === "Published"
+      ? "linear-gradient(135deg, #15803d, #22c55e)"
+      : "linear-gradient(135deg, #a16207, #facc15)",
+});
+
+const primaryBtn = {
+  backgroundColor: "#facc15",
+  color: "#020617",
+  borderRadius: "0.75rem",
+  boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
+};
+
+const editBtn = {
+  backgroundColor: "#38bdf8",
+  color: "#020617",
+};
+
+const deleteBtn = {
+  backgroundColor: "#ef4444",
+  color: "#020617",
+};
+
+const emptyStateStyle = {
+  textAlign: "center",
+  color: "#94a3b8",
+  padding: "1.5rem",
+};
+const textSingleLine = {
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+};
+const titleStyle = {
+  fontWeight: 600,          // keep it semi-bold
+  fontSize: "0.85rem",      // smaller than default
+  whiteSpace: "nowrap",     // prevent wrapping
+  overflow: "hidden",       // hide overflow
+  textOverflow: "ellipsis", // add "..." for long titles
+};
+
+const textTwoLines = {
+  display: "-webkit-box",
+  WebkitLineClamp: 2, // shows max 2 lines
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+};
+const colWidths = {
+  0: "40px",   // #
+  1: "80px",   // Image
+  2: "120px",  // Title
+  3: "150px",  // Author
+  4: "120px",  // Category
+  5: "100px",  // Status
+  6: "80px",   // Views
+  7: "300px",  // Content
+  8: "120px",  // Actions
+};
 
 export default AdminPosts;

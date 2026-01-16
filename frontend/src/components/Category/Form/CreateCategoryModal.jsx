@@ -3,10 +3,11 @@ import { useEffect , useState } from "react";
 
 const CreateCategoryModal = ({ onCreate , editCategory , onUpdate}) => {
 
-    const [formData , setFormData] = useState({
-        name : "",
-        description : ""
-    });
+    const [formData, setFormData] = useState({
+    name: "",
+    description: ""
+  });
+
 
     const [loading, setLoading] = useState(false);
 
@@ -52,7 +53,7 @@ const CreateCategoryModal = ({ onCreate , editCategory , onUpdate}) => {
 
   
 
-   return (
+return (
   <div
     className="modal fade"
     id="createCategoryModal"
@@ -64,18 +65,28 @@ const CreateCategoryModal = ({ onCreate , editCategory , onUpdate}) => {
         className="modal-content rounded-4 shadow-lg"
         onSubmit={handleSubmit}
         style={{
-          backgroundColor: "#1e293b",
-          border: "1px solid #334155"
+          background: "rgba(51, 65, 85, 0.9)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid #334155",
         }}
       >
-        {/* Header */}
-        <div
-          className="modal-header border-0"
-          style={{ backgroundColor: "#334155" }}
-        >
-          <h5 className="modal-title text-white fw-bold">
-            {editCategory ? "Update Category" : "Create Category"}
-          </h5>
+        {/* ===== HEADER ===== */}
+        <div className="modal-header border-0 px-4 pt-4 pb-3">
+          <div>
+            <h5
+              className="modal-title fw-bold mb-1"
+              style={{ color: "#facc15" }}
+            >
+              {editCategory ? "Update Category" : "Create New Category"}
+            </h5>
+            <p
+              className="mb-0"
+              style={{ color: "#cbd5f5", fontSize: "0.9rem" }}
+            >
+              Manage and organize your content categories
+            </p>
+          </div>
+
           <button
             type="button"
             className="btn-close btn-close-white"
@@ -83,16 +94,30 @@ const CreateCategoryModal = ({ onCreate , editCategory , onUpdate}) => {
           />
         </div>
 
-        {/* Body */}
+        {/* ===== DIVIDER ===== */}
+        <div
+          style={{
+            height: "1px",
+            background:
+              "linear-gradient(to right, transparent, #facc15, transparent)",
+          }}
+        />
+
+        {/* ===== BODY ===== */}
         <div className="modal-body px-4 py-4">
+          {/* Category Name */}
           <div className="mb-4">
-            <label className="form-label text-white fw-semibold">
+            <label
+              className="form-label fw-semibold"
+              style={{ color: "#e5e7eb" }}
+            >
               Category Name
             </label>
             <input
-              className="form-control"
+              type="text"
               name="name"
-              placeholder="Enter category name"
+              className="form-control"
+              placeholder="e.g. Technology, Business"
               value={formData.name}
               onChange={handleChange}
               required
@@ -100,60 +125,75 @@ const CreateCategoryModal = ({ onCreate , editCategory , onUpdate}) => {
                 backgroundColor: "#0f172a",
                 border: "1px solid #334155",
                 color: "#e5e7eb",
-                padding: "10px 12px"
+                padding: "12px",
+                borderRadius: "0.6rem",
               }}
             />
           </div>
 
-          <div className="mb-3">
-            <label className="form-label text-white fw-semibold">
+          {/* Description */}
+          <div>
+            <label
+              className="form-label fw-semibold"
+              style={{ color: "#e5e7eb" }}
+            >
               Description
             </label>
             <textarea
-              className="form-control"
               name="description"
-              placeholder="Optional description"
+              className="form-control"
+              placeholder="Brief description of this category"
               value={formData.description}
               onChange={handleChange}
-              rows="3"
+              rows={3}
               style={{
                 backgroundColor: "#0f172a",
                 border: "1px solid #334155",
                 color: "#e5e7eb",
-                padding: "10px 12px",
-                resize: "none"
+                padding: "12px",
+                borderRadius: "0.6rem",
+                resize: "none",
               }}
             />
           </div>
         </div>
 
-        {/* Footer */}
+        {/* ===== FOOTER ===== */}
         <div className="modal-footer border-0 px-4 pb-4">
           <button
             type="button"
-            className="btn btn-outline-light"
+            className="btn fw-semibold"
             data-bs-dismiss="modal"
+            style={{
+              color: "#e5e7eb",
+              backgroundColor: "#334155",
+              borderRadius: "0.6rem",
+            }}
           >
             Cancel
           </button>
+
           <button
-            className="btn fw-semibold text-white"
             type="submit"
+            className="btn fw-bold"
             disabled={loading}
-            data-bs-dismiss="modal"
             style={{
-              background: "linear-gradient(135deg, #2563eb, #1e40af)",
-              border: "none",
-              padding: "8px 22px"
+              backgroundColor: "#facc15",
+              color: "#020617",
+              borderRadius: "0.6rem",
+              padding: "8px 28px",
+              boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
             }}
           >
-            {editCategory ? "Update" : "Create"}
+            {editCategory ? "Update Category" : "Create Category"}
           </button>
         </div>
       </form>
     </div>
   </div>
 );
+
+
 
 };
 

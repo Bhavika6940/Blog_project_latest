@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../Sidebar/Sidebar";
 import CreateCategoryModal from "../Form/CreateCategoryModal";
 import axiosInstance from "../../../utils/authUtils";
 import Swal from "sweetalert2";
@@ -7,20 +6,15 @@ import Swal from "sweetalert2";
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editCategory, setEdit] = useState(null);
+  const [editCategory, setEditCategory] = useState(null);
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-  // Fetch categories
   const fetchCategories = async () => {
     try {
       setLoading(true);
       const res = await axiosInstance.get("/api/category");
       setCategories(res.data.data);
-      console.log("Category data", res.data.data);
-    } catch (err) {
-      console.error("Failed to fetch categories:", err);
-      alert(err.response?.data?.message || "Failed to fetch categories");
+    } catch {
+      Swal.fire("Error", "Failed to fetch categories", "error");
     } finally {
       setLoading(false);
     }
@@ -30,180 +24,152 @@ const Category = () => {
     fetchCategories();
   }, []);
 
-  const createCategory = async (formData) => {
+  const createCategory = async (payload) => {
     try {
-      await axiosInstance.post("/api/category", formData);
-      fetchCategories(); // refresh list
-    } catch (err) {
-      console.error("Failed to create category : ", err);
-      alert("Failed to create category!");
-    }
-  };
-
-  const handleDelete = async (id, name) => {
-    if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
-    try {
-      await axiosInstance.delete(`/api/category/${id}`);
-      setCategories(prev => prev.filter(cat => cat.id !== id));
-      alert(`Category "${name}" deleted successfully!`);
-    } catch (err) {
-      console.error("Failed to delete category:", err);
-      alert("Failed to delete category");
+      await axiosInstance.post("/api/category", payload);
+      fetchCategories();
+      Swal.fire("Success", "Category created successfully", "success");
+    } catch {
+      Swal.fire("Error", "Failed to create category", "error");
     }
   };
 
   const updateCategory = async (id, payload) => {
     try {
       const res = await axiosInstance.put(`/api/category/${id}`, payload);
-      const updatedCategory = res.data.data;
-      setCategories(prev => prev.map(c => (c.id === id ? updatedCategory : c)));
-      setEdit(null);
-      Swal.fire({
-                  title: "Success!",
-                  text: "Category updated successfully!",       
-                  icon: "success",    
-                  confirmButtonText: "OK",
-                  confirmButtonColor: "#4CAF50" 
-                  });
-      
-    } catch (err) {
-      console.error("Error editing category:", err);
-      Swal.fire({
-              title: "Error!",
-              text: "Failed to update category!",
-              icon: "error",
-              confirmButtonText: "OK",
-              confirmButtonColor: "#e74c3c", // red for error
-            })
-            
-      throw err;
+      setCategories((prev) =>
+        prev.map((c) => (c.id === id ? res.data.data : c))
+      );
+      setEditCategory(null);
+      Swal.fire("Success", "Category updated successfully", "success");
+    } catch {
+      Swal.fire("Error", "Failed to update category", "error");
+    }
+  };
+
+  const handleDelete = async (id, name) => {
+    const confirm = await Swal.fire({
+      title: "Delete Category?",
+      text: `Are you sure you want to delete "${name}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      confirmButtonText: "Delete",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      await axiosInstance.delete(`/api/category/${id}`);
+      setCategories((prev) => prev.filter((c) => c.id !== id));
+      Swal.fire("Deleted", "Category deleted successfully", "success");
+    } catch {
+      Swal.fire("Error", "Failed to delete category", "error");
     }
   };
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: "#1e293b" }}>
-        <div className="spinner-border text-warning" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+      <div style={loaderWrapper}>
+        <div className="spinner-border text-warning" />
       </div>
     );
   }
 
   return (
-    <div style={{ backgroundColor: "#1e293b", minHeight: "100vh", fontFamily: "Poppins, sans-serif" }}>
-      <Navbar />
+    <div style={pageStyle}>
+      <div className="container-fluid px-5 py-5">
 
-      <div className="container py-5">
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="fw-bold text-white" style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.5)" }}>Category Management</h2>
+          <div>
+            <h2 className="fw-bold text-white mb-1">Category Management</h2>
+            <p className="mb-0" style={{ color: "#cbd5f5" }}>
+              Organize content using structured categories.
+            </p>
+          </div>
+
           <button
-            className="btn btn-warning fw-bold"
+            className="btn fw-bold px-4 py-2"
             data-bs-toggle="modal"
             data-bs-target="#createCategoryModal"
+            style={primaryBtn}
           >
-            <i className="bi bi-plus-circle me-2"></i> Add Category
+            + Add Category
           </button>
         </div>
 
-        {/* Table Card */}
-        <div className="card shadow-lg rounded-4" style={{ backgroundColor: "#334155" }}>
-          <div className="table-responsive">
-            <table className="table table-hover align-middle mb-0">
-              <thead>
-                  <tr>
-                    {["#", "Name", "Description", "Created At", "Actions"].map((h, i) => (
-                      <th
-                        key={i}
-                        className={`text-white ${h === "Actions" ? "text-center" : ""}`}
-                        style={{
-                          backgroundColor: "#475569",
-                          borderColor: "#64748b"
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ))}
+        {/* Divider */}
+        <div style={dividerStyle} />
+
+        {/* Table */}
+        <div style={tableCardStyle}>
+          <table
+            className="table align-middle mb-0"
+            style={{ borderCollapse: "separate", borderSpacing: "0 12px" }}
+          >
+            <thead>
+              <tr>
+                {["#", "Name", "Description", "Created", "Actions"].map(
+                  (h) => (
+                    <th key={h} style={tableHeadStyle}>
+                      {h}
+                    </th>
+                  )
+                )}
+              </tr>
+            </thead>
+
+            <tbody>
+              {categories.length ? (
+                categories.map((cat, i) => (
+                  <tr key={cat.id}>
+                    <td style={cellStyle(i)}>{i + 1}</td>
+                    <td style={cellStyle(i)} className="fw-semibold">
+                      {cat.name}
+                    </td>
+                    <td style={cellStyle(i)}>
+                      {cat.description || "-"}
+                    </td>
+                    <td style={cellStyle(i)}>
+                      {new Date(cat.createdAt).toLocaleDateString()}
+                    </td>
+                    <td style={cellStyle(i)}>
+                      <div className="d-flex justify-content-center gap-2">
+                        <button
+                          className="btn btn-sm"
+                          style={editBtn}
+                          data-bs-toggle="modal"
+                          data-bs-target="#createCategoryModal"
+                          onClick={() => setEditCategory(cat)}
+                        >
+                          ✎
+                        </button>
+                        <button
+                          className="btn btn-sm"
+                          style={deleteBtn}
+                          onClick={() => handleDelete(cat.id, cat.name)}
+                        >
+                          🗑
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-
-              <tbody>
-                  {categories.length > 0 ? categories.map((cat, index) => {
-                    const rowBg = index % 2 === 0 ? "#334155" : "#3f4f67";
-
-                    return (
-                      <tr
-                        key={cat.id}
-                        style={{
-                          backgroundColor: rowBg,
-                          transition: "background-color 0.2s ease"
-                        }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.backgroundColor = "#1e40af33")
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.backgroundColor = rowBg)
-                        }
-                      >
-                        <td style={{ backgroundColor: "transparent", color: "#e2e8f0" }}>
-                          {index + 1}
-                        </td>
-                        <td
-                          className="fw-semibold"
-                          style={{ backgroundColor: "transparent", color: "#e2e8f0" }}
-                        >
-                          {cat.name}
-                        </td>
-                        <td style={{ backgroundColor: "transparent", color: "#e2e8f0" }}>
-                          {cat.description || "-"}
-                        </td>
-                        <td style={{ backgroundColor: "transparent", color: "#e2e8f0" }}>
-                          {new Date(cat.createdAt).toLocaleDateString()}
-                        </td>
-                        <td
-                          className="text-center"
-                          style={{ backgroundColor: "transparent" }}
-                        >
-                          <button
-                            className="btn btn-outline-info btn-sm me-2"
-                            title="Edit Category"
-                            onClick={() => setEdit(cat)}
-                            data-bs-toggle="modal"
-                            data-bs-target="#createCategoryModal"
-                          >
-                            <i className="bi bi-pencil"></i>
-                          </button>
-                          <button
-                            className="btn btn-outline-danger btn-sm"
-                            title="Delete Category"
-                            onClick={() => handleDelete(cat.id, cat.name)}
-                          >
-                            <i className="bi bi-trash"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  }) : (
-                    <tr>
-                      <td
-                        colSpan="5"
-                        className="text-center fw-semibold"
-                        style={{ backgroundColor: "#334155", color: "#94a3b8" }}
-                      >
-                        No categories found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-
-            </table>
-          </div>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" style={emptyStateStyle}>
+                    No categories found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
+
       </div>
 
       <CreateCategoryModal
-        categories={categories}
         onCreate={createCategory}
         onUpdate={updateCategory}
         editCategory={editCategory}
@@ -211,5 +177,76 @@ const Category = () => {
     </div>
   );
 };
+
+const pageStyle = {
+  minHeight: "100vh",
+  background: "linear-gradient(135deg, #0f172a, #1e293b)",
+  fontFamily: "Poppins, sans-serif",
+};
+
+const dividerStyle = {
+  height: "1px",
+  background:
+    "linear-gradient(to right, transparent, #facc15, transparent)",
+  marginBottom: "3rem",
+};
+
+const tableCardStyle = {
+  background: "rgba(51, 65, 85, 0.85)",
+  backdropFilter: "blur(10px)",
+  borderRadius: "1rem",
+  padding: "1.5rem",
+  boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+};
+
+const tableHeadStyle = {
+  backgroundColor: "#334155",
+  color: "#f8fafc",
+  border: "none",
+  padding: "14px",
+  fontWeight: "700",
+  fontSize: "0.85rem",
+  textTransform: "uppercase",
+  letterSpacing: "0.6px",
+};
+
+const cellStyle = (i) => ({
+  backgroundColor: i % 2 === 0 ? "#334155" : "#3f4f67",
+  color: "#e5e7eb",
+  border: "none",
+  padding: "14px",
+});
+
+const primaryBtn = {
+  backgroundColor: "#facc15",
+  color: "#020617",
+  borderRadius: "0.75rem",
+  boxShadow: "0 10px 25px rgba(250,204,21,0.35)",
+};
+
+const editBtn = {
+  backgroundColor: "#38bdf8",
+  color: "#020617",
+};
+
+const deleteBtn = {
+  backgroundColor: "#ef4444",
+  color: "#020617",
+};
+
+const emptyStateStyle = {
+  textAlign: "center",
+  color: "#94a3b8",
+  padding: "1.5rem",
+};
+
+const loaderWrapper = {
+  height: "100vh",
+  backgroundColor: "#1e293b",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
 
 export default Category;

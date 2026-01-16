@@ -9,6 +9,7 @@ const AdminSidebar = () => {
     localStorage.removeItem("user");
     window.location.href = "/";
   };
+
   const adminLinks = [
     { name: "Dashboard", path: "/dashboard", icon: "bi-speedometer2" },
     { name: "Roles", path: "/role", icon: "bi-shield-lock" },
@@ -19,56 +20,95 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div style={sidebarStyle}>
-      
-      <h3 className="fw-bold mb-1" style={brandStyle}>BLOGIFY</h3>
-      <p className="small mb-4" style={emailStyle}>
-        {user?.email}
-      </p>
+    <aside style={sidebarStyle}>
+      {/* ===== BRAND ===== */}
+      <div>
+        <h3 style={brandStyle}>BLOGIFY</h3>
+        <p style={emailStyle}>{user?.email}</p>
+        <hr style={dividerStyle} />
+      </div>
 
-      <ul className="nav flex-column gap-2">
+      {/* ===== NAVIGATION ===== */}
+      <ul className="nav flex-column gap-2 mt-2">
         {adminLinks.map((item) => (
-          <li key={item.name}>
-            <NavLink to={item.path} className={navLinkClass}>
-              <i className={`bi ${item.icon}`}></i>
-              {item.name}
+          <li key={item.name} className="nav-item">
+            <NavLink
+              to={item.path}
+              className={navLinkClass}
+              style={navLinkStyle}
+            >
+              <i className={`bi ${item.icon}`} style={iconStyle}></i>
+              <span>{item.name}</span>
             </NavLink>
           </li>
         ))}
-       
       </ul>
-      <div className="mt-auto">
-        <button
-          className="btn btn-outline-danger btn-sm w-100 mt-4"
-          onClick={logout}
-        >
-          Logout
-        </button>
-      </div>
-    </div>
+
+      {/* ===== LOGOUT ===== */}
+      <button
+        onClick={logout}
+        className="btn btn-outline-danger btn-sm fw-semibold mt-auto"
+        style={logoutBtnStyle}
+      >
+        <i className="bi bi-box-arrow-right me-2"></i>
+        Logout
+      </button>
+    </aside>
   );
 };
 
 export default AdminSidebar;
-
 const sidebarStyle = {
-     width: "260px",
-        height: "100vh",
-        background: "linear-gradient(180deg, #0f172a, #1e293b)",
-        boxShadow: "4px 0 12px rgba(0,0,0,0.4)",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        padding: "20px",
-        color: "white",
-        display: "flex",
-        flexDirection: "column",
-        zIndex: 1000,
-}
+  width: "260px",
+  height: "100vh",
+  position: "fixed",
+  top: 0,
+  left: 0,
+  padding: "24px 20px",
+  display: "flex",
+  flexDirection: "column",
+  background: "linear-gradient(180deg, #0f172a, #1e293b)",
+  boxShadow: "4px 0 18px rgba(0,0,0,0.45)",
+  zIndex: 1000,
+};
 
-const brandStyle = { color: "#22c55e", letterSpacing: "1px" };
-const emailStyle = { color: "#cbd5f5", wordBreak: "break-all" };
+const brandStyle = {
+  color: "#0ebe17",
+  fontSize: "1.7rem",
+  fontWeight: "800",
+  letterSpacing: "2px",
+  marginBottom: "0.25rem",
+};
+
+const emailStyle = {
+  color: "#cbd5f5",
+  fontSize: "0.8rem",
+  wordBreak: "break-word",
+  marginBottom: "0.5rem",
+};
+
+const dividerStyle = {
+  borderColor: "#334155",
+  marginBottom: "1rem",
+};
+
+const navLinkStyle = {
+  transition: "all 0.25s ease",
+};
+
 const navLinkClass = ({ isActive }) =>
   `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 fw-semibold ${
-    isActive ? "text-success bg-success bg-opacity-10" : "text-light"
+    isActive
+      ? "text-success bg-success bg-opacity-10"
+      : "text-light"
   }`;
+
+const iconStyle = {
+  fontSize: "1.1rem",
+  minWidth: "20px",
+};
+
+const logoutBtnStyle = {
+  borderRadius: "10px",
+  padding: "10px",
+};
