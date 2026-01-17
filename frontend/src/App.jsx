@@ -1,7 +1,7 @@
 
 import {BrowserRouter , Routes, Route} from "react-router-dom";
 import {lazy , Suspense} from "react";
-
+import LoadingFallback from "./components/Loading/LoadingFallback";
 const Permissions = lazy(() => import("./components/Permission/Layout/PermissionLayout"));
 const Users = lazy(() => import("./components/User/Layout/UserLayout"));
 const Category = lazy(() => import("./components/Category/Layout/CategoryLayout"));
@@ -12,13 +12,14 @@ const AdminPost = lazy(() => import( "./components/AdminPosts/Layout/AdminPostLa
 const Roles = lazy(() => import( "./components/Role/Layout/RoleLayout"));
 const ProtectedRoute = lazy(() => import( "./routes/ProtectedRoute"));
 const RoleGuard = lazy(() => import( "./routes/RoleGuard"));
+const PageNotFound = lazy(() => import( "./components/PageNotFound/PageNotFound"));
 
 
 
 function App() {
   return(
     <BrowserRouter>
-    <Suspense fallback= {<div>Loading...</div>}>
+    <Suspense fallback= {<LoadingFallback />}>
       <Routes>
         <Route path = "/" element= {<Login />} />
         <Route path = "/dashboard" element = {<ProtectedRoute><Dashboard/></ProtectedRoute>} />
@@ -28,6 +29,7 @@ function App() {
         <Route path = "/category" element = {<RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN"]}><Category /></RoleGuard>} />
         <Route path = "/posts" element = { <RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN","AUTHOR"]}><AdminPost /></RoleGuard>} /> 
         <Route path = "/createBlog" element= {<RoleGuard allowedRoles={["AUTHOR", "ADMIN", "SUPER_ADMIN"]}><CreatePost /></RoleGuard>} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>
     </ BrowserRouter>

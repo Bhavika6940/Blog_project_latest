@@ -36,6 +36,7 @@ const Layout = ({ children }) => {
       style={{
         display: "flex",
         minHeight: "100vh",
+        overflow: "hidden", 
         background: "linear-gradient(135deg, #0f172a, #1e293b)",
       }}
     >
@@ -44,6 +45,8 @@ const Layout = ({ children }) => {
         style={{
           flexGrow: 1,
           marginLeft: SIDEBAR_WIDTH,
+          overflowY: "auto", 
+          overflowX: "auto",
           padding: "2rem",
           fontFamily: "Poppins, sans-serif",
           color: "#e5e7eb",

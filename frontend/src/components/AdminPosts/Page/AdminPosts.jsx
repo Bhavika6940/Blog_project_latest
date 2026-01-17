@@ -1,24 +1,33 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/authUtils";
 import EditPostModal from "../Form/EditPostModal";
+import { Popconfirm } from "antd";
+import Swal from "sweetalert2";
 
 const AdminPosts = () => {
     const [posts, setPosts] = useState([]);
     const [ expandedRow, setExpandedRow ] = useState(null);
     const [loading , setLoading] = useState(true);
-    const [postToEdit, setPostToEdit] = useState(null);
+    const [showEdit, setShowEdit] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [selectedPost, setSelectedPost] = useState(null);
+    const openEdit = (post) => {
+      setSelectedPost(post);
+      setShowEdit(true);
+    };
 
 
     const handleDelete = async (postId) => {
-        try{
-            await axiosInstance.delete(`/api/post/${postId}`);
-            fetchPosts();
-        }
-        catch(error){
-            console.error("Failed to delete post", error);
-        }
+      try {
+        await axiosInstance.delete(`/api/post/${postId}`);
+        message.success("Post deleted successfully");
+        fetchPosts();
+      } catch (error) {
+        console.error("Failed to delete post", error);
+        message.error("Failed to delete post");
+      }
     };
+
 
     const fetchCategories = async () => {
         try{
@@ -83,9 +92,23 @@ const AdminPosts = () => {
 
         {/* Table */}
         <div style={tableCardStyle}>
+          <div 
+              className="table-responsive" 
+              style={{
+                maxHeight: '70vh',           // ← vertical scroll limit
+                overflowY: 'auto',           // vertical scrollbar
+                overflowX: 'auto',           // horizontal scrollbar when needed
+                borderRadius: '1rem',
+                scrollbarWidth: 'thin',      // firefox
+                scrollbarColor: '#64748b #334155'
+              }}
+            >
           <table
             className="table align-middle mb-0"
-            style={{ borderCollapse: "separate", borderSpacing: "0 12px" }}
+            style={{ 
+              borderCollapse: "separate",
+              borderSpacing: "0 12px",
+              minWidth: '1000px' }}
           >
             <thead>
               <tr>
@@ -171,12 +194,20 @@ const AdminPosts = () => {
                             <button
                               className="btn btn-sm"
                               style={editBtn}
-                              onClick={() => setPostToEdit(post)}
                               data-bs-toggle="modal"
                               data-bs-target="#editPostModal"
+                              onClick={() => openEdit(post)}
                             >
                               ✎
                             </button>
+                            <Popconfirm
+                                title="Delete Post"
+                                description="Are you sure you want to delete this post?"
+                                okText="Yes, Delete"
+                                cancelText="Cancel"
+                                okButtonProps={{ danger: true }}
+                                onConfirm={() => handleDelete(post.id)}
+                              >
                             <button
                               className="btn btn-sm"
                               style={deleteBtn}
@@ -184,6 +215,7 @@ const AdminPosts = () => {
                             >
                               🗑
                             </button>
+                            </Popconfirm>
                           </div>
                         )}
                       </td>
@@ -201,13 +233,16 @@ const AdminPosts = () => {
           </table>
 
           {/* Modals */}
-          <EditPostModal
-            post={postToEdit}
-            categories={categories}
-            onSuccess={fetchPosts}
-          />
+          
         </div>
-      </div>
+      </div></div>
+      <EditPostModal
+              show={showEdit}
+              post={selectedPost}
+              categories={categories}
+              onClose={() => setShowEdit(false)}
+              onUpdated={fetchPosts}
+            />
     </div>
   );
 
