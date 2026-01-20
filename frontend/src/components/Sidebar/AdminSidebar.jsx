@@ -73,11 +73,12 @@ const sidebarStyle = {
 };
 
 const brandStyle = {
-  color: "#0ebe17",
-  fontSize: "1.7rem",
-  fontWeight: "800",
-  letterSpacing: "2px",
-  marginBottom: "0.25rem",
+  color: "#22c55e", 
+  fontWeight: "900",
+  margin: 0,
+  fontSize: "1.8rem",
+  letterSpacing: "1px",
+  textTransform: "uppercase"
 };
 
 const emailStyle = {

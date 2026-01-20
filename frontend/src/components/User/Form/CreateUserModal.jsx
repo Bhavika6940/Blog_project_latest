@@ -9,13 +9,13 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
     roleId: ""
   });
 
-  // Populate form if editUser changes
+  
   useEffect(() => {
     if (editUser) {
       setFormData({
         username: editUser.username || "",
         email: editUser.email || "",
-        password: "", // leave blank for security
+        password: "", 
         roleId: editUser.roleId ? String(editUser.roleId) : ""
       });
     } else {

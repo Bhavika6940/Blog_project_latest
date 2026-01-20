@@ -94,7 +94,7 @@ return (
           />
         </div>
 
-        {/* ===== DIVIDER ===== */}
+        
         <div
           style={{
             height: "1px",
@@ -103,9 +103,9 @@ return (
           }}
         />
 
-        {/* ===== BODY ===== */}
+       
         <div className="modal-body px-4 py-4">
-          {/* Category Name */}
+          
           <div className="mb-4">
             <label
               className="form-label fw-semibold"
@@ -177,6 +177,7 @@ return (
             type="submit"
             className="btn fw-bold"
             disabled={loading}
+            data-bs-dismiss="modal"
             style={{
               backgroundColor: "#facc15",
               color: "#020617",

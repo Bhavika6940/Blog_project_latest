@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CreateUserModal from "../Form/CreateUserModal";
 import axiosInstance from "../../../utils/authUtils";
 import Swal from "sweetalert2";
+import { Popconfirm } from "antd";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -50,13 +51,13 @@ const Users = () => {
     }
   };
 
-  // Maps for fast lookup
+  
   const roleMap = roles.reduce((acc, role) => {
     acc[role.id] = role.name;
     return acc;
   }, {});
 
-  // Toggle permissions
+ 
   const togglePermission = (userId, field) => {
     setPermissions((prev) => {
       const existing = prev.find(p => p.userId === userId);
@@ -79,7 +80,7 @@ const Users = () => {
     });
   };
 
-  // Save permissions
+
   const savePermissions = async (userId) => {
     const perm = permissions.find(p => p.userId === userId);
     const payload = {
@@ -112,7 +113,7 @@ const Users = () => {
     }
   };
 
-  // Edit user
+ 
 const updateUser = async (userId, payload) => {
   try {
     await axiosInstance.put(`/api/user/${userId}`, payload);
@@ -145,7 +146,7 @@ Swal.fire({
   }
 };
 
-  // Delete user
+ 
   const handleDelete = async (userId) => {
     const data = users.find(u => u.id === userId);
     if (!data) {
@@ -204,7 +205,7 @@ Swal.fire({
   >
     <div className="container-fluid px-5 py-5">
 
-      {/* Header */}
+      
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h2 className="fw-bold text-white mb-1">User Management</h2>
@@ -229,7 +230,7 @@ Swal.fire({
         </button>
       </div>
 
-      {/* Divider */}
+      
       <div
         style={{
           height: "1px",
@@ -239,7 +240,7 @@ Swal.fire({
         }}
       />
 
-      {/* Content */}
+      
       {users.length === 0 ? (
         <div className="text-center fw-semibold" style={{ color: "#e5e7eb" }}>
           No users found. Create your first user to get started.
@@ -260,7 +261,7 @@ Swal.fire({
               borderSpacing: "0 12px",
             }}
           >
-            {/* Table Head */}
+          
             <thead>
               <tr>
                 {["#", "User", "Email", "Role", "Permissions", "Actions"].map(
@@ -285,7 +286,7 @@ Swal.fire({
               </tr>
             </thead>
 
-            {/* Table Body */}
+           
             <tbody>
               {users.map((user, index) => {
                 const userPerm = permissionMap[user.id] || {
@@ -296,20 +297,20 @@ Swal.fire({
 
                 return (
                   <tr key={user.id}>
-                    {/* Index */}
+                    
                     <td style={cellStyle(index)}>
                       <span className="fw-semibold">{index + 1}</span>
                     </td>
 
-                    {/* Username */}
+                   
                     <td style={cellStyle(index)}>
                       <span className="fw-semibold">{user.username}</span>
                     </td>
 
-                    {/* Email */}
+                    
                     <td style={cellStyle(index)}>{user.email}</td>
 
-                    {/* Role Badge */}
+                   
                     <td style={cellStyle(index)}>
                       <span
                         style={{
@@ -329,7 +330,7 @@ Swal.fire({
                       </span>
                     </td>
 
-                    {/* Permissions */}
+                    
                     <td style={cellStyle(index)}>
                       <div className="d-flex gap-3">
                         {["canRead", "canWrite", "canDelete"].map((field) => (
@@ -356,7 +357,7 @@ Swal.fire({
                       </div>
                     </td>
 
-                    {/* Actions */}
+                    
                     <td style={cellStyle(index)}>
                       <div className="d-flex gap-2">
                         <button
@@ -382,17 +383,27 @@ Swal.fire({
                         >
                           ✎
                         </button>
+          
 
-                        <button
-                          className="btn btn-sm"
-                          style={{
-                            backgroundColor: "#ef4444",
-                            color: "#020617",
-                          }}
-                          onClick={() => handleDelete(user.id)}
+                        <Popconfirm
+                          title="Delete User"
+                          description="Are you sure you want to delete this user?"
+                          okText="Yes, Delete"
+                          cancelText="Cancel"
+                          okButtonProps={{ danger: true }}
+                          onConfirm={() => handleDelete(user.id)}
                         >
-                          🗑
-                        </button>
+                          <button
+                            className="btn btn-sm"
+                            style={{
+                              backgroundColor: "#ef4444",
+                              color: "#020617",
+                            }}
+                          >
+                            🗑
+                          </button>
+                        </Popconfirm>
+
                       </div>
                     </td>
                   </tr>

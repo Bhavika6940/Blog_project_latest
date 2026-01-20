@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/authUtils";
 import EditPostModal from "../Form/EditPostModal";
-import { Popconfirm } from "antd";
-import Swal from "sweetalert2";
+import { Popconfirm, message } from "antd";
+
 
 const AdminPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -15,9 +15,9 @@ const AdminPosts = () => {
       setSelectedPost(post);
       setShowEdit(true);
     };
-
-
     const handleDelete = async (postId) => {
+      const previousPosts = [...posts];
+      setPosts(posts.filter(post => post.id !== postId));
       try {
         await axiosInstance.delete(`/api/post/${postId}`);
         message.success("Post deleted successfully");
@@ -25,9 +25,10 @@ const AdminPosts = () => {
       } catch (error) {
         console.error("Failed to delete post", error);
         message.error("Failed to delete post");
+
+        setPosts(previousPosts);
       }
     };
-
 
     const fetchCategories = async () => {
         try{
@@ -95,11 +96,11 @@ const AdminPosts = () => {
           <div 
               className="table-responsive" 
               style={{
-                maxHeight: '70vh',           // ← vertical scroll limit
-                overflowY: 'auto',           // vertical scrollbar
-                overflowX: 'auto',           // horizontal scrollbar when needed
+                maxHeight: '70vh',          
+                overflowY: 'auto',           
+                overflowX: 'auto',           
                 borderRadius: '1rem',
-                scrollbarWidth: 'thin',      // firefox
+                scrollbarWidth: 'thin',      
                 scrollbarColor: '#64748b #334155'
               }}
             >
@@ -145,10 +146,10 @@ const AdminPosts = () => {
                           width: colWidths[colIndex],
                         }}
                       >
-                        {/* Index */}
+                        
                         {colIndex === 0 && <span className="fw-semibold">{index + 1}</span>}
 
-                        {/* Image */}
+                        
                         {colIndex === 1 && (
                           post.image ? (
                             <img
@@ -161,26 +162,25 @@ const AdminPosts = () => {
                           )
                         )}
 
-                        {/* Title */}
+                        
                         {colIndex === 2 && (
                             <span className="fw-semibold" style={titleStyle}>
                               {post.title}
                             </span>
                           )}
 
-                        {/* Author */}
+                        
                         {colIndex === 3 && (post.user?.email || "N/A")}
 
-                        {/* Category */}
+                        
                         {colIndex === 4 && (post.category?.name || "N/A")}
 
-                        {/* Status */}
+                       
                         {colIndex === 5 && <span style={statusBadgeStyle(post.status)}>{post.status}</span>}
 
-                        {/* Views */}
+        
                         {colIndex === 6 && post.views}
-
-                        {/* Content */}
+                        
                         {colIndex === 7 && (
                             <div style={{ maxWidth: colWidths[7], ...textTwoLines }}>
                               {expandedRow === post.id
@@ -188,7 +188,7 @@ const AdminPosts = () => {
                                 : `${getPreview(post.content)}...`}
                             </div>
                           )}
-                        {/* Actions */}
+                        
                         {colIndex === 8 && (
                           <div className="d-flex gap-2 justify-content-center">
                             <button
@@ -208,14 +208,15 @@ const AdminPosts = () => {
                                 okButtonProps={{ danger: true }}
                                 onConfirm={() => handleDelete(post.id)}
                               >
-                            <button
-                              className="btn btn-sm"
-                              style={deleteBtn}
-                              onClick={() => handleDelete(post.id)}
-                            >
-                              🗑
-                            </button>
-                            </Popconfirm>
+                                <button
+                                  type="button"
+                                  className="btn btn-sm"
+                                  style={deleteBtn}
+                                >
+                                  🗑
+                                </button>
+                              </Popconfirm>
+
                           </div>
                         )}
                       </td>
@@ -231,8 +232,6 @@ const AdminPosts = () => {
               )}
             </tbody>
           </table>
-
-          {/* Modals */}
           
         </div>
       </div></div>
@@ -338,30 +337,30 @@ const textSingleLine = {
   textOverflow: "ellipsis",
 };
 const titleStyle = {
-  fontWeight: 600,          // keep it semi-bold
-  fontSize: "0.85rem",      // smaller than default
-  whiteSpace: "nowrap",     // prevent wrapping
-  overflow: "hidden",       // hide overflow
-  textOverflow: "ellipsis", // add "..." for long titles
+  fontWeight: 600,         
+  fontSize: "0.85rem",      
+  whiteSpace: "nowrap",     
+  overflow: "hidden",       
+  textOverflow: "ellipsis", 
 };
 
 const textTwoLines = {
   display: "-webkit-box",
-  WebkitLineClamp: 2, // shows max 2 lines
+  WebkitLineClamp: 2, 
   WebkitBoxOrient: "vertical",
   overflow: "hidden",
   textOverflow: "ellipsis",
 };
 const colWidths = {
-  0: "40px",   // #
-  1: "80px",   // Image
-  2: "120px",  // Title
-  3: "150px",  // Author
-  4: "120px",  // Category
-  5: "100px",  // Status
-  6: "80px",   // Views
-  7: "300px",  // Content
-  8: "120px",  // Actions
+  0: "40px",   
+  1: "80px",   
+  2: "120px",  
+  3: "150px",  
+  4: "120px",  
+  5: "100px",  
+  6: "80px",   
+  7: "300px",  
+  8: "120px",  
 };
 
 export default AdminPosts;

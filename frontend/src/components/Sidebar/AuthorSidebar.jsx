@@ -78,7 +78,14 @@ const sidebarStyle = {
         zIndex: 1000,
       }
 
-const brandStyle = { color: "#22c55e", letterSpacing: "1px" };
+const brandStyle = {
+  color: "#22c55e", 
+  fontWeight: "900",
+  margin: 0,
+  fontSize: "1.8rem",
+  letterSpacing: "1px",
+  textTransform: "uppercase"
+};
 const emailStyle = { color: "#cbd5f5", wordBreak: "break-all" };
 const navLinkClass = ({ isActive }) =>
   `nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 fw-semibold ${

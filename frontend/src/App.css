@@ -49,3 +49,7 @@
 .table-responsive::-webkit-scrollbar-thumb:hover {
   background: #94a3b5;
 }
+
+main {
+  scroll-behavior: smooth;
+}

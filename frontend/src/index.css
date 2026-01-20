@@ -29,3 +29,25 @@ body,
   scrollbar-width: thin;
   scrollbar-color: #64748b #334155;
 }
+
+/* Custom Neon Green Top Loader (Global) */
+#nprogress .bar {
+  background: #22c55e !important; /* Pure Neon Green */
+  height: 4px !important;         /* Broadness */
+  z-index: 10001 !important;      /* Stays above everything */
+}
+
+/* The Neon Glow Effect */
+#nprogress .peg {
+  box-shadow: 
+    0 0 15px #22c55e, 
+    0 0 10px #22c55e, 
+    0 0 5px #22c55e !important;
+  opacity: 1;
+}
+
+/* Matching Neon Spinner */
+#nprogress .spinner-icon {
+  border-top-color: #22c55e !important;
+  border-left-color: #22c55e !important;
+}

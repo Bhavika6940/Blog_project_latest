@@ -7,12 +7,15 @@ const Users = lazy(() => import("./components/User/Layout/UserLayout"));
 const Category = lazy(() => import("./components/Category/Layout/CategoryLayout"));
 const Login = lazy(() => import( "./components/Login/Login"));
 const Dashboard = lazy(() => import( "./components/Dashboard/Layout/DashboardLayout"));
-const CreatePost = lazy(() => import( "./components/Post/Layout/CreatePostLayout"));
+const CreatePost = lazy(() => import( "./components/AdminPosts/Layout/CreatePostLayout"));
 const AdminPost = lazy(() => import( "./components/AdminPosts/Layout/AdminPostLayout"));
 const Roles = lazy(() => import( "./components/Role/Layout/RoleLayout"));
 const ProtectedRoute = lazy(() => import( "./routes/ProtectedRoute"));
 const RoleGuard = lazy(() => import( "./routes/RoleGuard"));
 const PageNotFound = lazy(() => import( "./components/PageNotFound/PageNotFound"));
+const UserPosts = lazy(() => import( "./components/Post/Layout/PostLayout"));
+const PostsDetails = lazy(() => import( "./components/Post/Layout/PostDetailLayout"));  
+const AboutPage = lazy(() => import( "./components/AboutPage/Layout/AboutPageLayout"));
 
 
 
@@ -30,6 +33,10 @@ function App() {
         <Route path = "/posts" element = { <RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN","AUTHOR"]}><AdminPost /></RoleGuard>} /> 
         <Route path = "/createBlog" element= {<RoleGuard allowedRoles={["AUTHOR", "ADMIN", "SUPER_ADMIN"]}><CreatePost /></RoleGuard>} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path = "/allPosts" element= {<UserPosts />} />
+        <Route path="/postContent/:id/post" element={<PostsDetails />} />
+        <Route path = "/about" element= {<AboutPage />} />
+
       </Routes>
     </Suspense>
     </ BrowserRouter>

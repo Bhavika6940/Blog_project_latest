@@ -1,10 +1,12 @@
-import Layout from "../../../layout/layout";
-import Posts from "../Pages/Posts";
+import Layout from "../../../layout/BlogLayout";
+import Posts from "../Pages/Posts"
 const PostLayout = () => {
     return(
-        <Layout>
-            <Posts/>
-        </Layout>
+        
+            <Layout>
+                <Posts />
+            </Layout>
+       
     )
 }
 

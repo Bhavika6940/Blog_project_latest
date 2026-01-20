@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/authUtils";
+import nprogress from "nprogress";
+import "nprogress/nprogress.css";
+
+
 
 
 const PostDetails = () => {
     const {id} = useParams();
     const [post, setPost] = useState(null);
     const [loading , setLoading] = useState(true);
+    const navigate = useNavigate();
   
     useEffect(() => {
+       
+        nprogress.start();
         const fetchPost = async () => {
             try{
                 const res = await axiosInstance.get(`/api/post/${id}`);
@@ -18,104 +25,140 @@ const PostDetails = () => {
                 console.error("Failed to fetch post", error);
             } finally{
                 setLoading(false);
+                nprogress.done();
             }
         };
         fetchPost();
     }, [id]);
-      if (loading) {
+
+
+  if (loading) {
     return (
-      <div style={{ backgroundColor: "#1e293b", minHeight: "100vh" }}>
-        <p className="text-white text-center mt-5 fw-semibold">
-          Loading post...
-        </p>
+      <div className="d-flex justify-content-center align-items-center" style={{ backgroundColor: "#1e293b", minHeight: "100vh" }}>
+        <div className="spinner-border text-info" role="status"></div>
       </div>
     );
   }
 
   if (!post) {
     return (
-      <div style={{ backgroundColor: "#1e293b", minHeight: "100vh" }}>
-        
-        <p className="text-white text-center mt-5 fw-semibold">
-          Post not found
-        </p>
+      <div className="d-flex justify-content-center align-items-center" style={{ backgroundColor: "#1e293b", minHeight: "100vh" }}>
+        <p className="text-white">Post not found</p>
       </div>
     );
   }
-  return (
-  <div
-    style={{
-      backgroundColor: "#1e293b",
-      minHeight: "100vh",
-      fontFamily: "Poppins, sans-serif",
-    }}
-  >
-  
 
-    <div className="container-fluid px-5 py-5">
-      <div className="col-xxl-9 mx-auto">
-        {/* Title */}
-        <h1
-          className="fw-bold text-white mb-3"
-          style={{
-            textShadow: "2px 2px 8px rgba(0,0,0,0.5)",
+ return (
+  <>
+    
+
+    <div style={{ 
+      backgroundColor: "#1e293b", 
+      minHeight: "100vh", 
+      padding: "40px 20px",
+      position: "relative", // Needed for absolute positioning of side designs
+      overflow: "hidden"    // Prevents side glows from creating scrollbars
+    }}>
+      
+      {/* Left Side Design (Neon Accent) */}
+      <div style={{
+        position: "absolute",
+        top: "20%",
+        left: "-100px",
+        width: "300px",
+        height: "300px",
+        backgroundColor: "rgba(57, 255, 20, 0.05)", // Very subtle neon green
+        filter: "blur(100px)",
+        borderRadius: "50%",
+        zIndex: 0
+      }}></div>
+
+      {/* Right Side Design (Info Blue Accent) */}
+      <div style={{
+        position: "absolute",
+        bottom: "10%",
+        right: "-100px",
+        width: "400px",
+        height: "400px",
+        backgroundColor: "rgba(13, 202, 240, 0.05)", // Very subtle info blue
+        filter: "blur(120px)",
+        borderRadius: "50%",
+        zIndex: 0
+      }}></div>
+
+      <div className="mx-auto" style={{ maxWidth: "800px", position: "relative", zIndex: 1 }}>
+        
+        {/* Back Button */}
+        <button 
+          onClick={() => navigate("/allPosts")} 
+          className="btn btn-sm mb-4 fw-bold shadow-sm"
+          style={{ 
+            backgroundColor: "#334155", 
+            color: "#0dcaf0", 
+            border: "1px solid rgba(13, 202, 240, 0.3)",
+            padding: "8px 20px",
+            borderRadius: "8px"
           }}
         >
-          {post.title}
-        </h1>
+          ← BACK
+        </button>
 
-        {/* Meta info */}
-        <div className="d-flex flex-wrap gap-3 mb-4 text-light fw-semibold">
-          <span>
-            ✍ Author: <span className="text-info">{post.user?.username}</span>
-          </span>
-          <span>
-            👁 Views: <span className="text-success">{post.views}</span>
-          </span>
+        {/* Title Section */}
+        <div className="text-start mb-4">
+          <h1 className="text-white fw-bold mb-2" style={{ fontSize: "2.2rem", letterSpacing: "-1px" }}>
+            {post?.title}
+          </h1>
+          <p className="text-info small fw-bold opacity-75 text-uppercase" style={{ letterSpacing: "1px" }}>
+            {post?.user?.username} • {post?.views} VIEWS
+          </p>
         </div>
 
-        {/* Divider */}
-        <div
-          style={{
-            height: "2px",
-            backgroundColor: "#334155",
-            marginBottom: "30px",
+        {/* Post Image */}
+        {post?.image && (
+          <div className="text-center mb-0">
+            <img
+              src={`${import.meta.env.VITE_API_BASE_URL}/public/${post.image}`}
+              alt=""
+              className="img-fluid rounded-top-4 shadow-lg"
+              style={{ 
+                width: "100%", 
+                maxHeight: "550px", 
+                objectFit: "cover", 
+                display: "block",
+                border: "1px solid rgba(255,255,255,0.05)"
+              }}
+            />
+          </div>
+        )}
+
+        {/* Content Card */}
+        <div 
+          className="shadow-lg"
+          style={{ 
+            backgroundColor: "#334155", 
+            borderRadius: post?.image ? "0 0 16px 16px" : "16px",
+            border: "1px solid rgba(255,255,255,0.1)",
+            overflow: "hidden"
           }}
-        />
-
-        {/* Image + Content Row */}
-        <div className="row g-4">
-          {/* Image Column */}
-          {post.image && (
-            <div className="col-lg-4 d-flex align-items-start">
-              <img
-                src={`${import.meta.env.VITE_API_BASE_URL}/public/${post.image}`}
-                alt={post.title}
-                className="img-fluid rounded-4 shadow-lg"
-                style={{ width: "100%", maxHeight: "600px", objectFit: "cover" }}
-              />
-            </div>
-          )}
-
-          {/* Content Column */}
-          <div className={post.image ? "col-lg-8" : "col-12"}>
+        >
+          <div className="p-4 p-md-5">
             <div
-              className="card shadow-lg rounded-4 p-4"
-              style={{ backgroundColor: "#334155" }}
-            >
-              <div
-                className="text-white fs-6 lh-lg"
-                style={{ textAlign: "justify" }}
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-            </div>
+              className="text-white fw-medium"
+              style={{ 
+                textAlign: "justify",
+                lineHeight: "1.9",
+                fontSize: "1.05rem",
+                wordWrap: "break-word",
+                color: "rgba(255,255,255,0.9)"
+              }}
+              dangerouslySetInnerHTML={{ __html: post?.content }}
+            />
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </>
 );
-
 };
 
 export default PostDetails;

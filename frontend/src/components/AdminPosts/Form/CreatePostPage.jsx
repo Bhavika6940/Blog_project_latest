@@ -60,10 +60,10 @@ const CreatePost = () => {
                 payload.append("title" , formData.title);
                 payload.append("content", formData.content);
                 payload.append("excerpt", formData.excerpt);
-				payload.append("categoryId", formData.categoryId);
-				payload.append("status", formData.status);
-				payload.append("metaTitle", formData.metaTitle);
-				payload.append("metaDescription", formData.metaDescription);
+                payload.append("categoryId", formData.categoryId);
+                payload.append("status", formData.status);
+                payload.append("metaTitle", formData.metaTitle);
+                payload.append("metaDescription", formData.metaDescription);
 
 				payload.append(
 					"tags",
