@@ -3,7 +3,7 @@ const PermissionCard = ({ permission, index, onToggle }) => {
     onToggle(index, field);
   };
 
-  const checkboxColor = "#071831"; // new uniform color for all checkboxes
+  const checkboxColor = "#071831"; 
 
   return (
     <div className="col-sm-6 col-md-4">
@@ -20,7 +20,7 @@ const PermissionCard = ({ permission, index, onToggle }) => {
           justifyContent: "space-between"
         }}
       >
-        {/* Permission Name */}
+        
         <div>
           <h6
             className="fw-bold mb-2"
@@ -29,7 +29,7 @@ const PermissionCard = ({ permission, index, onToggle }) => {
             {permission.name}
           </h6>
 
-          {/* Description */}
+          
           <p
             className="small mb-3"
             style={{ color: "#cbd5e1", lineHeight: "1.4", minHeight: "40px" }}
@@ -38,7 +38,7 @@ const PermissionCard = ({ permission, index, onToggle }) => {
           </p>
         </div>
 
-        {/* Checkboxes */}
+        
         <div className="d-flex gap-3 justify-content-between mt-2">
           {["canRead", "canWrite", "canDelete"].map((field) => (
             <label
@@ -48,7 +48,7 @@ const PermissionCard = ({ permission, index, onToggle }) => {
                 alignItems: "center",
                 cursor: "pointer",
                 fontWeight: "600",
-                color: "#fff", // keep text white
+                color: "#fff", 
                 gap: "4px",
                 fontSize: "0.9rem"
               }}

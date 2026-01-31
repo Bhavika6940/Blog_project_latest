@@ -30,7 +30,8 @@ const CreatePost = () => {
             }
             catch (err) {
                 console.error("Failed to load categories", err);
-                }
+                
+              }
         };
     
         useEffect(() => {
@@ -51,8 +52,29 @@ const CreatePost = () => {
           }));
         };
         
+        const validateForm = () => {
+          if(!formData.title.trim()) return "Title is required";
+          if(!formData.content.trim()) return "Content is required";
+          if(!formData.excerpt.trim()) return "Excerpt is required";
+          if(!formData.categoryId) return "Category is required";
+
+          if(formData.metaDescription.length > 160){
+            return "Meta description must be 160 characters or less";
+          }
+          return null;
+        }
         const handleSubmit = async (e) => {
             e.preventDefault();
+            const error = validateForm();
+            if(error){
+              Swal.fire({
+                title : "Warning!",
+                text: error,
+                icon : "warning",
+                confirmButtonColor: "#f7de00"
+              });
+              return;
+            }
             setLoading(true);
 
             try{
@@ -76,12 +98,12 @@ const CreatePost = () => {
 				if(imageFile){
 					payload.append("image", imageFile);
 				}
-                await axiosInstance.post("/api/post", payload , {
-					headers : {
+        await axiosInstance.post("/api/post", payload , {
+				headers : {
 						"Content-type" : "multipart/form-data"
 					},
 				});
-                setFormData({
+        setFormData({
 					title: "",
 					content: "",
 					excerpt: "",
@@ -93,24 +115,23 @@ const CreatePost = () => {
         		});
 				Swal.fire({
 						title: "Success!",
-						text: "Post created successfully!",       // your dynamic message
-						icon: "success",     // "success", "error", "warning", "info", "question"
+						text: "Post created successfully!",       
+						icon: "success",     
 						confirmButtonText: "OK",
-						confirmButtonColor: "#4CAF50" // optional
+						confirmButtonColor: "#4CAF50" 
 						});
             } 
             catch (err) {
                 const message =
-						err.response?.data?.message ||
-						err.response?.data?.error ||
-						"Something went wrong";
+                  err.response?.data?.message ||
+                  err.response?.data?.error ||
+                  "Something went wrong";
 
-					console.error("Create post error:", err.response?.data || err);
-					
-
-					if (err.response?.status === 401) {
-						navigate("/");
-  }
+                console.error("Create post error:",  err);
+              
+                if (err.response?.status === 401) {
+                  navigate("/");
+                }
             }
             finally {
                     setLoading(false);

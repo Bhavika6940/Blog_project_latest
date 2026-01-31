@@ -90,7 +90,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
           border: "1px solid #334155",
         }}
       >
-        {/* Header */}
+        
         <div className="modal-header border-0 px-4 pt-4 pb-3">
           <div>
             <h5 className="fw-bold mb-1" style={{ color: "#facc15" }}>
@@ -108,7 +108,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
           />
         </div>
 
-        {/* Divider */}
+        
         <div
           style={{
             height: "1px",
@@ -117,9 +117,9 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
           }}
         />
 
-        {/* Body */}
+        
         <div className="modal-body px-4 py-4">
-          {/* Username */}
+          
           <div className="mb-4">
             <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Username
@@ -136,7 +136,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
             />
           </div>
 
-          {/* Email */}
+          
           <div className="mb-4">
             <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Email Address
@@ -153,7 +153,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
             />
           </div>
 
-          {/* Password */}
+          
           <div className="mb-4">
             <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Password
@@ -178,7 +178,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
             />
           </div>
 
-          {/* Role */}
+          
           <div>
             <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
               Role
@@ -203,7 +203,7 @@ const CreateUserModal = ({ roles, onCreate, onUpdate, editUser }) => {
           </div>
         </div>
 
-        {/* Footer */}
+        
         <div className="modal-footer border-0 px-4 pb-4">
           <button
             type="button"

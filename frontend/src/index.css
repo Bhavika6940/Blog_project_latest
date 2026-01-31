@@ -7,37 +7,34 @@ body,
   margin: 0;
 }
 
-/* Force visible scrollbars - works in Chrome/Edge/Safari */
+
 .table-responsive::-webkit-scrollbar {
-  width: 10px;           /* vertical */
-  height: 10px;          /* horizontal */
+  width: 10px;           
+  height: 10px;          
   background: transparent;
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
   background: #64748b;
   border-radius: 10px;
-  border: 2px solid #334155; /* matches your theme */
-}
+  border: 2px solid #334155; }
 
 .table-responsive::-webkit-scrollbar-thumb:hover {
   background: #94a3b5;
 }
 
-/* Firefox */
+
 .table-responsive {
   scrollbar-width: thin;
   scrollbar-color: #64748b #334155;
 }
 
-/* Custom Neon Green Top Loader (Global) */
 #nprogress .bar {
-  background: #22c55e !important; /* Pure Neon Green */
-  height: 4px !important;         /* Broadness */
-  z-index: 10001 !important;      /* Stays above everything */
+  background: #22c55e !important; 
+  height: 4px !important;         
+  z-index: 10001 !important;      
 }
 
-/* The Neon Glow Effect */
 #nprogress .peg {
   box-shadow: 
     0 0 15px #22c55e, 
@@ -46,8 +43,3 @@ body,
   opacity: 1;
 }
 
-/* Matching Neon Spinner */
-#nprogress .spinner-icon {
-  border-top-color: #22c55e !important;
-  border-left-color: #22c55e !important;
-}

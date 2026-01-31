@@ -16,6 +16,8 @@ const PageNotFound = lazy(() => import( "./components/PageNotFound/PageNotFound"
 const UserPosts = lazy(() => import( "./components/Post/Layout/PostLayout"));
 const PostsDetails = lazy(() => import( "./components/Post/Layout/PostDetailLayout"));  
 const AboutPage = lazy(() => import( "./components/AboutPage/Layout/AboutPageLayout"));
+const CategoryPosts = lazy(() => import("./components/Post/Layout/CategoryPostsLayout"));
+
 
 
 
@@ -36,6 +38,8 @@ function App() {
         <Route path = "/allPosts" element= {<UserPosts />} />
         <Route path="/postContent/:id/post" element={<PostsDetails />} />
         <Route path = "/about" element= {<AboutPage />} />
+        <Route path = "/posts/category/:slug" element = {<CategoryPosts/>} />
+        
 
       </Routes>
     </Suspense>

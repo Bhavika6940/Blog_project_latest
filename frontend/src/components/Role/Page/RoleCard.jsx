@@ -29,7 +29,7 @@ const RoleCard = ({ role, onSelectEdit }) => {
         "0 15px 30px rgba(0,0,0,0.35)";
     }}
   >
-    {/* Role Header */}
+    
     <div className="mb-3">
       <h5 className="fw-bold mb-1" style={{ color: "#facc15" }}>
         {role.name}
@@ -46,7 +46,7 @@ const RoleCard = ({ role, onSelectEdit }) => {
       </p>
     </div>
 
-    {/* Divider */}
+    
     <div
       style={{
         height: "1px",
@@ -55,7 +55,7 @@ const RoleCard = ({ role, onSelectEdit }) => {
       }}
     />
 
-    {/* Actions */}
+    
     <div className="d-flex gap-2">
       <button
         className="btn btn-sm fw-bold flex-grow-1"

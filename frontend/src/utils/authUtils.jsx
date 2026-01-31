@@ -1,14 +1,12 @@
-// src/utils/authUtils.jsx
+
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// --- Token Management ---
 export const getToken = () => localStorage.getItem("token");
 export const setToken = (token) => localStorage.setItem("token", token);
 export const removeToken = () => localStorage.removeItem("token");
 
-// --- User Management ---
 export const getUser = () => {
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
@@ -19,7 +17,6 @@ export const setUser = (user) =>
     JSON.stringify(user)
   );
 
-// --- Axios Instance (FIXED) ---
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -27,7 +24,7 @@ const axiosInstance = axios.create({
   },
 });
 
-// Attach token automatically
+
 axiosInstance.interceptors.request.use((config) => {
   const token = getToken();
   if (token) {
@@ -36,7 +33,7 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-// --- Login ---
+
 export const loginUser = async (email, password) => {
   const res = await axios.post(`${API_BASE_URL}/api/user/login`, {
     email,
@@ -47,7 +44,7 @@ export const loginUser = async (email, password) => {
   return res.data;
 };
 
-// --- Logout ---
+
 export const logoutUser = () => {
   removeToken();
   removeUser();

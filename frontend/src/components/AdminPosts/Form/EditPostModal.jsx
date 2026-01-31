@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 
 const EditPostModal = ({ show, onClose, post, categories, onUpdated }) => {
   const [loading, setLoading] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  
 
   const [formData, setFormData] = useState({
     title: "",
@@ -56,24 +56,17 @@ const handleEditorChange = (value) => {
 
     try {
       const payload = new FormData();
-      Object.keys(formData).forEach((key) => {
-        if (key === "tags") {
-          payload.append(
-            "tags",
-            JSON.stringify(
-              formData.tags
-                ? formData.tags.split(",").map((t) => t.trim())
-                : []
-            )
-          );
-        } else {
-          payload.append(key, formData[key]);
-        }
-      });
+      const tagsArray = formData.tags
+         ? formData.tags.split(",").map(t => t.trim()).filter(Boolean)
+         : [];
+         Object.keys(formData).forEach((key) => {
+            if(key !== "tags"){
+              payload.append(key, formData[key]);
+            }
+         });
 
-      if (imageFile) {
-        payload.append("image", imageFile);
-      }
+      tagsArray.forEach(tag => payload.append("tags[]",tag));
+      console.log("Tags array:", tagsArray);
 
       await axiosInstance.put(`/api/post/${post.id}`, payload);
 
@@ -81,6 +74,7 @@ const handleEditorChange = (value) => {
       onUpdated();
       onClose();
     } catch (err) {
+      console.log("Edit error :", err);
       Swal.fire("Error", "Failed to update post", "error");
     } finally {
       setLoading(false);
@@ -192,15 +186,7 @@ const handleEditorChange = (value) => {
                   </div>
                 </div>
 
-                <div className="mb-4">
-                    <label className="form-label text-light fw-semibold mb-2">Featured Image</label>
-                    <input
-                      type="file"
-                      className="form-control bg-dark text-white border-0 py-2"
-                      accept="image/*"
-                      onChange={(e) => setImageFile(e.target.files[0])}
-                    />
-                </div>
+                
 
                 <hr className="border-secondary opacity-25 my-5" />
 
@@ -229,7 +215,7 @@ const handleEditorChange = (value) => {
                 </div>
             </div>
 
-            {/* Footer: Sticky bottom */}
+            
             <div className="modal-footer border-0 p-4" style={{ position: "sticky", bottom: 0, background: "#1e293b", zIndex: 10, borderBottomLeftRadius: "1rem", borderBottomRightRadius: "1rem" }}>
               <button type="button" className="btn btn-outline-secondary px-4" onClick={onClose}>
                 Cancel

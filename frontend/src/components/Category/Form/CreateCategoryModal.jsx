@@ -70,7 +70,7 @@ return (
           border: "1px solid #334155",
         }}
       >
-        {/* ===== HEADER ===== */}
+        
         <div className="modal-header border-0 px-4 pt-4 pb-3">
           <div>
             <h5
@@ -131,7 +131,7 @@ return (
             />
           </div>
 
-          {/* Description */}
+          
           <div>
             <label
               className="form-label fw-semibold"
@@ -158,7 +158,7 @@ return (
           </div>
         </div>
 
-        {/* ===== FOOTER ===== */}
+        
         <div className="modal-footer border-0 px-4 pb-4">
           <button
             type="button"

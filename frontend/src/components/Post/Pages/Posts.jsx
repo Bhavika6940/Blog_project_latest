@@ -8,29 +8,19 @@ import "nprogress/nprogress.css";
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
+  const limit = 3;
 
-
-  const fetchCategories = async () => {
-    try {
-      const res = await axiosInstance.get("/api/category");
-      setCategories(res.data.data);
-    } catch (err) {
-      console.error("Failed to load categories", err);
-    }
-  };
 
   useEffect(() => {
     nprogress.start();
     fetchPosts();
-    fetchCategories();
   }, []);
 
 
   const fetchPosts = async () => {
     try {
-      const res = await axiosInstance.get("/api/post/posts");
+      const res = await axiosInstance.get(`/api/post/paginated?limit=${limit}`);
       setPosts(res.data.data);
     } catch (error) {
       console.error("Failed to fetch posts", error);
@@ -39,22 +29,6 @@ const Posts = () => {
       nprogress.done();
     }
   };
-
- 
-
- 
-
-  const postsByCategory = posts.reduce((acc, post) => {
-    const categoryName = post.category?.name || "Uncategorized";
-
-    if (!acc[categoryName]) {
-      acc[categoryName] = [];
-    }
-    acc[categoryName].push(post);
-    return acc;
-  }, {});
-
- 
 
   if (loading) {
     return (
@@ -124,30 +98,13 @@ const Posts = () => {
         }}
       />
 
-      <div className="col-xxl-9 mx-auto">
-        {Object.keys(postsByCategory).length === 0 ? (
+      <div className="row col-xxl-9 mx-auto">
+        {posts.length === 0 ? (
           <p className="text-white fw-semibold text-center">
             No posts available
           </p>
         ) : (
-          Object.entries(postsByCategory).map(
-            ([categoryName, posts]) => (
-              <div key={categoryName} className="mb-5">
-                <h4
-                  className="fw mb-4"
-                  style={{
-                    color: "#e7d90f",
-                    display: "inline-block",
-                    paddingBottom: "4px",
-                    fontSize: "30px",
-                    textTransform: "uppercase"
-                  }}
-                >
-                  {categoryName}
-                </h4>
-
-                <div className="row">
-                  {posts.map((post) => (
+          posts.map((post)=>(
                     <div
                       className="col-md-6 col-lg-4 mb-4"
                       key={post.id}
@@ -187,7 +144,7 @@ const Posts = () => {
 
                           <p className="mb-2 fw-semibold">
                             <span className="text-info">Author:</span>{" "}
-                            {post.user?.username || "Unknown"}
+                            {post.user?.username || "Unknown" }
                           </p>
 
                           <div className="mt-auto d-flex justify-content-between align-items-center">
@@ -213,15 +170,11 @@ const Posts = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )))}
                 </div>
-              </div>
-            )
-          )
-        )}
+              </div>   
       </div>
-    </div>
-  </div>
+    
   </>
 );
 

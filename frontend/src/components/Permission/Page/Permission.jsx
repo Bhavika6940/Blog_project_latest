@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PermissionCard from "./PermissionCard";
-import Navbar from "../../Sidebar/Sidebar";
 import axiosInstance from "../../../utils/authUtils";
 import Swal from "sweetalert2";
 
@@ -79,7 +78,7 @@ const Permissions = () => {
               text: "Failed to save permissions!",
               icon: "error",
               confirmButtonText: "OK",
-              confirmButtonColor: "#e74c3c", // red for error
+              confirmButtonColor: "#e74c3c", 
             })
       
     }
@@ -98,7 +97,7 @@ const Permissions = () => {
         color: "white",
       }}
     >
-      <Navbar />
+     
 
       <div className="container px-5 py-5">
 

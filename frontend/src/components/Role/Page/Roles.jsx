@@ -17,7 +17,6 @@ const Roles = () => {
     setRoles([]);
   }
 };
-
   useEffect(() => {
     fetchRoles();
   }, []);
@@ -65,7 +64,7 @@ const Roles = () => {
   >
     <div className="container-fluid px-5 py-5">
 
-      {/* Header */}
+      
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h2 className="fw-bold text-white mb-1">Role Management</h2>
@@ -89,8 +88,6 @@ const Roles = () => {
           + Create Role
         </button>
       </div>
-
-      {/* Divider */}
       <div
         style={{
           height: "1px",
@@ -100,7 +97,7 @@ const Roles = () => {
         }}
       />
 
-      {/* Content */}
+      
       <div
         style={{
           background: "rgba(51, 65, 85, 0.85)",
@@ -128,7 +125,6 @@ const Roles = () => {
           </div>
         )}
       </div>
-
       <CreateRoleModal
         onCreate={addRole}
         onUpdate={updateRole}

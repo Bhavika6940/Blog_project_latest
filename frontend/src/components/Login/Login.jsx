@@ -42,7 +42,7 @@ const Login = () => {
           padding: "2rem",
         }}
       >
-        {/* Brand */}
+       
         <div className="text-center mb-4">
           <h2
             className="fw-bold mb-1"
@@ -57,7 +57,7 @@ const Login = () => {
           <p className="text-gray-400 mb-0">Sign in to your account</p>
         </div>
 
-        {/* Error */}
+        
         {error && (
           <div
             className="alert text-center py-2 mb-3"
@@ -71,9 +71,9 @@ const Login = () => {
           </div>
         )}
 
-        {/* Form */}
+        
         <form onSubmit={handleSubmit}>
-          {/* Email */}
+          
           <div className="mb-3">
             <label
               htmlFor="email"
@@ -101,7 +101,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
+          
           <div className="mb-4">
             <label
               htmlFor="password"
@@ -129,7 +129,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Submit Button */}
+          
           <button
             type="submit"
             className="btn w-100 fw-bold"
@@ -148,7 +148,7 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Footer */}
+        
         <div className="text-center mt-4">
           <p className="text-gray-400 mb-0" style={{ fontSize: "0.9rem" }}>
             Don't have an account?{" "}

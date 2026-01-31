@@ -74,7 +74,7 @@ const CreateRoleModal = ({ onCreate, onUpdate , editRole }) => {
           border: "1px solid #334155",
         }}
       >
-        {/* Header */}
+        
         <div className="modal-header border-0 px-4 pt-4 pb-3">
           <div>
             <h5 className="modal-title fw-bold mb-1" style={{ color: "#facc15" }}>
@@ -95,7 +95,7 @@ const CreateRoleModal = ({ onCreate, onUpdate , editRole }) => {
           />
         </div>
 
-        {/* Divider */}
+        
         <div
           style={{
             height: "1px",
@@ -104,7 +104,7 @@ const CreateRoleModal = ({ onCreate, onUpdate , editRole }) => {
           }}
         />
 
-        {/* Body */}
+        
         <div className="modal-body px-4 py-4">
           <div className="mb-4">
             <label className="form-label fw-semibold" style={{ color: "#e5e7eb" }}>
@@ -150,7 +150,7 @@ const CreateRoleModal = ({ onCreate, onUpdate , editRole }) => {
           </div>
         </div>
 
-        {/* Footer */}
+        
         <div className="modal-footer border-0 px-4 pb-4">
           <button
             type="button"

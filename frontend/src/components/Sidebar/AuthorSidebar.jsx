@@ -13,14 +13,14 @@ const AuthorSidebar = () => {
     { name: "Dashboard", path: "/dashboard", icon: "bi-speedometer2" },
     { name: "Create Post", path: "/createBlog", icon: "bi-plus-circle" },
     { name: "My Posts", path: "/posts", icon: "bi-journal-text" },
-    // { name: "Profile", path: "/profile", icon: "bi-person" },
+    
   ];
 
   return (
     <div
       style={sidebarStyle}
     >
-      {/* Brand */}
+      
       <h3
         className="fw-bold mb-1"
         style={brandStyle}
@@ -28,7 +28,7 @@ const AuthorSidebar = () => {
         BLOGIFY
       </h3>
 
-      {/* User Email */}
+      
       <p
         className="small mb-4"
         style={emailStyle}
@@ -36,7 +36,7 @@ const AuthorSidebar = () => {
         {user?.email}
       </p>
 
-      {/* Navigation */}
+      
       <ul className="nav flex-column gap-2">
          {authorLinks.map((item) => (
           <li key={item.name}>
@@ -48,7 +48,7 @@ const AuthorSidebar = () => {
         ))}
       </ul>
 
-      {/* Push Logout to Bottom */}
+      
       <div className="mt-auto">
         <button
           className="btn btn-outline-danger btn-sm w-100 mt-4"

@@ -17,7 +17,6 @@ const Dashboard = () => {
     <div style={pageStyle}>
       <div className="container-fluid px-5 py-5">
 
-        {/* ===== HERO HEADER ===== */}
         <div className="text-center mb-5">
           <h1
             className="fw-bold display-4 mb-3"
@@ -46,7 +45,7 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* ===== DIVIDER ===== */}
+        
         <div
           style={{
             height: "1px",
@@ -58,7 +57,7 @@ const Dashboard = () => {
 
         <div className="col-xxl-9 mx-auto">
 
-          {/* ===== ABOUT CARD ===== */}
+          
           <div style={{ ...cardStyle, marginBottom: "3rem" }}>
             <h3
               className="fw-bold mb-3"
@@ -137,7 +136,6 @@ const Dashboard = () => {
             </p>
           </div>
 
-          {/* ===== CAPABILITIES ===== */}
           <div style={cardStyle}>
             <h4
               className="fw-bold mb-4"

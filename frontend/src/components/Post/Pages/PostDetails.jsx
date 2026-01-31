@@ -4,9 +4,6 @@ import axiosInstance from "../../../utils/authUtils";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
 
-
-
-
 const PostDetails = () => {
     const {id} = useParams();
     const [post, setPost] = useState(null);
@@ -18,7 +15,7 @@ const PostDetails = () => {
         nprogress.start();
         const fetchPost = async () => {
             try{
-                const res = await axiosInstance.get(`/api/post/${id}`);
+                const res = await axiosInstance.get(`/api/post/get/${id}`);
                 setPost(res.data.data);
             }
             catch(error){
@@ -50,37 +47,35 @@ const PostDetails = () => {
 
  return (
   <>
-    
-
     <div style={{ 
       backgroundColor: "#1e293b", 
       minHeight: "100vh", 
       padding: "40px 20px",
-      position: "relative", // Needed for absolute positioning of side designs
-      overflow: "hidden"    // Prevents side glows from creating scrollbars
+      position: "relative", 
+      overflow: "hidden"    
     }}>
       
-      {/* Left Side Design (Neon Accent) */}
+      
       <div style={{
         position: "absolute",
         top: "20%",
         left: "-100px",
         width: "300px",
         height: "300px",
-        backgroundColor: "rgba(57, 255, 20, 0.05)", // Very subtle neon green
+        backgroundColor: "rgba(57, 255, 20, 0.05)", 
         filter: "blur(100px)",
         borderRadius: "50%",
         zIndex: 0
       }}></div>
 
-      {/* Right Side Design (Info Blue Accent) */}
+      
       <div style={{
         position: "absolute",
         bottom: "10%",
         right: "-100px",
         width: "400px",
         height: "400px",
-        backgroundColor: "rgba(13, 202, 240, 0.05)", // Very subtle info blue
+        backgroundColor: "rgba(13, 202, 240, 0.05)", 
         filter: "blur(120px)",
         borderRadius: "50%",
         zIndex: 0
@@ -88,7 +83,7 @@ const PostDetails = () => {
 
       <div className="mx-auto" style={{ maxWidth: "800px", position: "relative", zIndex: 1 }}>
         
-        {/* Back Button */}
+        
         <button 
           onClick={() => navigate("/allPosts")} 
           className="btn btn-sm mb-4 fw-bold shadow-sm"
@@ -103,7 +98,7 @@ const PostDetails = () => {
           ← BACK
         </button>
 
-        {/* Title Section */}
+        
         <div className="text-start mb-4">
           <h1 className="text-white fw-bold mb-2" style={{ fontSize: "2.2rem", letterSpacing: "-1px" }}>
             {post?.title}
@@ -113,7 +108,7 @@ const PostDetails = () => {
           </p>
         </div>
 
-        {/* Post Image */}
+        
         {post?.image && (
           <div className="text-center mb-0">
             <img
@@ -131,7 +126,7 @@ const PostDetails = () => {
           </div>
         )}
 
-        {/* Content Card */}
+        
         <div 
           className="shadow-lg"
           style={{ 

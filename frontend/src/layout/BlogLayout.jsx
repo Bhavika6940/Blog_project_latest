@@ -15,18 +15,18 @@ const UserLayout = ({ children }) => {
     >
       <Navbar />
 
-      {/* Main Content Area - Absolute Zero Padding */}
+      
       <main 
         style={{ 
           flex: 1,
-          padding: 0, // Removes top/bottom and side padding
-          margin: 0   // Ensures no default browser margins interfere
+          padding: 0, 
+          margin: 0   
         }}
       >
         <div 
           style={{ 
-            width: "100%", // Takes up the full width of the screen
-            margin: 0      // Removes the centering effect
+            width: "100%", 
+            margin: 0      
           }}
         >
           {children}

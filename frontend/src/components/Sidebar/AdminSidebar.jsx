@@ -21,14 +21,14 @@ const AdminSidebar = () => {
 
   return (
     <aside style={sidebarStyle}>
-      {/* ===== BRAND ===== */}
+       
       <div>
         <h3 style={brandStyle}>BLOGIFY</h3>
         <p style={emailStyle}>{user?.email}</p>
         <hr style={dividerStyle} />
       </div>
 
-      {/* ===== NAVIGATION ===== */}
+      
       <ul className="nav flex-column gap-2 mt-2">
         {adminLinks.map((item) => (
           <li key={item.name} className="nav-item">
@@ -44,7 +44,7 @@ const AdminSidebar = () => {
         ))}
       </ul>
 
-      {/* ===== LOGOUT ===== */}
+      
       <button
         onClick={logout}
         className="btn btn-outline-danger btn-sm fw-semibold mt-auto"

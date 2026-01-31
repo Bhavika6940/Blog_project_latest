@@ -57,7 +57,13 @@ const Category = () => {
         showConfirmButton: false,
       });
     } catch (err) {
-      Swal.fire("Error", "Failed to create category", "error");
+      console.log("Error is :",err.response.data.errors[0].message);
+      Swal.fire({
+                      title : "Warning!",
+                      text: err,
+                      icon : "warning",
+                      confirmButtonColor: "#f7de00"
+                    });
     }
   };
 
